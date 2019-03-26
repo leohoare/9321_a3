@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d6302f1-4cc9-4075-933e-1d41e7dd4ae0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/data/analytics.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/analytics.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,12 +35,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="1424" />
+          <entry key="py" value="1503" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="1424" />
+          <entry key="Python" value="1503" />
         </counts>
       </usages-collector>
     </session>
@@ -53,12 +53,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" column="21" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
+            <state relative-caret-position="479">
+              <caret line="37" selection-start-line="37" selection-end-line="37" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1553565793709" expanded="true" signature="85:516" ph="..." />
-                <marker date="1553565793709" expanded="true" signature="593:621" ph="..." />
+                <marker date="1553568075976" expanded="true" signature="133:564" ph="..." />
+                <marker date="1553568075976" expanded="true" signature="641:1085" ph="..." />
               </folding>
             </state>
           </provider>
@@ -141,9 +141,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4985507" visible="true" weight="0.25274727" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4985507" visible="true" weight="0.25274727" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.5014493" side_tool="true" weight="0.25274727" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -154,7 +153,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.29591838" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.29591838" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -178,12 +177,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="21" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
+        <state relative-caret-position="479">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <marker date="1553565793709" expanded="true" signature="85:516" ph="..." />
-            <marker date="1553565793709" expanded="true" signature="593:621" ph="..." />
+            <marker date="1553568075976" expanded="true" signature="133:564" ph="..." />
+            <marker date="1553568075976" expanded="true" signature="641:1085" ph="..." />
           </folding>
         </state>
       </provider>

@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import numpy as np
-
+from sklearn.preprocessing import StandardScaler
 
 
 def clean_analytics(data ,heart):
@@ -27,6 +27,15 @@ def clean_analytics(data ,heart):
 #todo export to model.csv
 def clean_model(data):
     print(data.head())
+    dataset = pd.get_dummies(data, columns=['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca'])
+    standardScaler = StandardScaler()
+    columns_to_scale = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak']
+    dataset[columns_to_scale] = standardScaler.fit_transform(dataset[columns_to_scale])
+
+    a = os.path.join(os.path.split(os.getcwd())[0], "data/model.csv")
+    dataset.to_csv(a, sep=',', index=False)
+
+
 
 
 
