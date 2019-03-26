@@ -21,23 +21,28 @@ def clean_analytics(data ,heart):
 
 
 
-
-
-#todo categorical separation
-#todo export to model.csv
 def clean_model(data):
-    print(data.head())
+
     dataset = pd.get_dummies(data, columns=['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca'])
     standardScaler = StandardScaler()
     columns_to_scale = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak']
     dataset[columns_to_scale] = standardScaler.fit_transform(dataset[columns_to_scale])
 
+    #renaming columns
+
+    dataset.rename( columns={"sex_0.0": "sex_female", "sex_1.0": "sex_male"})
+    #hard_coding renamde
+    dataset.columns = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak', 'thal', 'sex_female', 'sex_male', 'cp_typical_anign', 'cp_atypical_angina', 'cp_non_anginal_pain',
+     'cp_asymptomatic', 'fbs_<120', 'fbs_>120', 'restecg_normal', 'restecg_having_st_t', 'restecg_probable_ventricular_hypothropy', 'exang_0.0', 'exang_1.0', 'slope_1.0',
+     'slope_2.0', 'slope_3.0', 'ca_0.0', 'ca_1.0', 'ca_2.0', 'ca_3.0']
+
+    #thalch to end position
+    dataset = dataset[['age', 'trestbps', 'chol', 'oldpeak', 'thal', 'sex_female', 'sex_male', 'cp_typical_anign', 'cp_atypical_angina', 'cp_non_anginal_pain',
+     'cp_asymptomatic', 'fbs_<120', 'fbs_>120', 'restecg_normal', 'restecg_having_st_t', 'restecg_probable_ventricular_hypothropy', 'exang_0.0', 'exang_1.0', 'slope_1.0',
+     'slope_2.0', 'slope_3.0', 'ca_0.0', 'ca_1.0', 'ca_2.0', 'ca_3.0','thalach']]
+
     a = os.path.join(os.path.split(os.getcwd())[0], "data/model.csv")
     dataset.to_csv(a, sep=',', index=False)
-
-
-
-
 
 
 if __name__ == "__main__":
