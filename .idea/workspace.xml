@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d6302f1-4cc9-4075-933e-1d41e7dd4ae0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/data/analytics.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/analytics.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,12 +35,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="1364" />
+          <entry key="py" value="1424" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="1364" />
+          <entry key="Python" value="1424" />
         </counts>
       </usages-collector>
     </session>
@@ -52,12 +53,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
+            <state relative-caret-position="420">
+              <caret line="28" column="21" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1553565242598" expanded="true" signature="122:551" ph="..." />
-                <marker date="1553565242598" expanded="true" signature="634:649" ph="..." />
+                <marker date="1553565793709" expanded="true" signature="85:516" ph="..." />
+                <marker date="1553565793709" expanded="true" signature="593:621" ph="..." />
               </folding>
             </state>
           </provider>
@@ -177,12 +178,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
+        <state relative-caret-position="420">
+          <caret line="28" column="21" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <marker date="1553565242598" expanded="true" signature="122:551" ph="..." />
-            <marker date="1553565242598" expanded="true" signature="634:649" ph="..." />
+            <marker date="1553565793709" expanded="true" signature="85:516" ph="..." />
+            <marker date="1553565793709" expanded="true" signature="593:621" ph="..." />
           </folding>
         </state>
       </provider>
