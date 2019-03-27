@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d6302f1-4cc9-4075-933e-1d41e7dd4ae0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/analytics.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/analytics.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/model.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/model.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/train.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,12 +38,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="1755" />
+          <entry key="py" value="2478" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="1755" />
+          <entry key="Python" value="2478" />
         </counts>
       </usages-collector>
     </session>
@@ -52,23 +53,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="39" column="69" selection-start-line="39" selection-start-column="69" selection-end-line="39" selection-end-column="69" />
+            <state relative-caret-position="795">
+              <caret line="53" column="86" lean-forward="true" selection-start-line="53" selection-start-column="4" selection-end-line="53" selection-end-column="86" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1553647953928" expanded="true" signature="133:560" ph="..." />
-                <marker date="1553647953928" expanded="true" signature="584:1984" ph="..." />
+                <marker date="1553668705403" expanded="true" signature="133:690" ph="..." />
+                <marker date="1553668705403" expanded="true" signature="714:715" ph="..." />
+                <marker date="1553668705403" expanded="true" signature="714:1677" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model/train.py">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+                <marker date="1553671595916" expanded="true" signature="186:201" ph="..." />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -86,15 +96,14 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/model/train.py" />
         <option value="$PROJECT_DIR$/model/model.py" />
+        <option value="$PROJECT_DIR$/model/train.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="y" value="23" />
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="1680" />
-    <option name="height" value="973" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -155,7 +164,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="973" extended-state="0" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4985507" visible="true" weight="0.25579977" />
@@ -169,7 +178,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3291714" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.29591838" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -186,18 +195,27 @@
     <entry file="file://$PROJECT_DIR$/model/analytics.csv" />
     <entry file="file://$PROJECT_DIR$/model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="39" column="69" selection-start-line="39" selection-start-column="69" selection-end-line="39" selection-end-column="69" />
+        <state relative-caret-position="795">
+          <caret line="53" column="86" lean-forward="true" selection-start-line="53" selection-start-column="4" selection-end-line="53" selection-end-column="86" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <marker date="1553647953928" expanded="true" signature="133:560" ph="..." />
-            <marker date="1553647953928" expanded="true" signature="584:1984" ph="..." />
+            <marker date="1553668705403" expanded="true" signature="133:690" ph="..." />
+            <marker date="1553668705403" expanded="true" signature="714:715" ph="..." />
+            <marker date="1553668705403" expanded="true" signature="714:1677" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/train.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+            <marker date="1553671595916" expanded="true" signature="186:201" ph="..." />
+          </folding>
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

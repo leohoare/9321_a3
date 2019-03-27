@@ -13,9 +13,13 @@ def clean_analytics(data ,heart):
     h = pd.read_csv(heart)
     l = np.array(aa)
     df = pd.DataFrame(data=l,columns=list(h))
-    df = df.drop(columns='target')
-    df = df.astype(dtype='float')
+    #don't drop target as it is used for both
+    df = df.replace(r'\\n','',regex=True)
+    df = df.astype(dtype=float)
+    #change if taget>0 == 1
+    df['target'] = (df['target']>0).astype(float)
     target=os.path.join(os.path.split(data)[0],"analytics.csv")
+
     df.to_csv(target,sep=',', index= False)
     return df
 
@@ -23,23 +27,24 @@ def clean_analytics(data ,heart):
 
 def clean_model(data):
 
-    dataset = pd.get_dummies(data, columns=['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca'])
+    dataset = pd.get_dummies(data, columns=['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca','thal'])
     standardScaler = StandardScaler()
     columns_to_scale = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak']
     dataset[columns_to_scale] = standardScaler.fit_transform(dataset[columns_to_scale])
 
-    #renaming columns
 
-    dataset.rename( columns={"sex_0.0": "sex_female", "sex_1.0": "sex_male"})
-    #hard_coding renamde
-    dataset.columns = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak', 'thal', 'sex_female', 'sex_male', 'cp_typical_anign', 'cp_atypical_angina', 'cp_non_anginal_pain',
-     'cp_asymptomatic', 'fbs_<120', 'fbs_>120', 'restecg_normal', 'restecg_having_st_t', 'restecg_probable_ventricular_hypothropy', 'exang_0.0', 'exang_1.0', 'slope_1.0',
-     'slope_2.0', 'slope_3.0', 'ca_0.0', 'ca_1.0', 'ca_2.0', 'ca_3.0']
 
-    #thalch to end position
-    dataset = dataset[['age', 'trestbps', 'chol', 'oldpeak', 'thalach', 'sex_female', 'sex_male', 'cp_typical_anign', 'cp_atypical_angina', 'cp_non_anginal_pain',
-     'cp_asymptomatic', 'fbs_<120', 'fbs_>120', 'restecg_normal', 'restecg_having_st_t', 'restecg_probable_ventricular_hypothropy', 'exang_0.0', 'exang_1.0', 'slope_1.0',
-     'slope_2.0', 'slope_3.0', 'ca_0.0', 'ca_1.0', 'ca_2.0', 'ca_3.0','thal']]
+
+    #hard_coding rename and arrangement
+
+    dataset.columns = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak' ,
+                       'sex_0.0', 'sex_1.0', 'cp_1.0', 'cp_2.0', 'cp_3.0',
+                       'cp_4.0', 'fbs_0.0', 'fbs_1.0', 'restecg_0.0', 'restecg_1.0',
+                       'restecg_2.0', 'exang_0.0', 'exang_1.0', 'slope_1.0', 'slope_2.0',
+                       'slope_3.0', 'ca_0.0', 'ca_1.0', 'ca_2.0', 'ca_3.0', 'thal_3.0', 'thal_6.0',
+                       'thal_7.0','target']
+
+    print(list(dataset))
 
     a = os.path.join(os.path.split(os.getcwd())[0], "data/model.csv")
     dataset.to_csv(a, sep=',', index=False)
