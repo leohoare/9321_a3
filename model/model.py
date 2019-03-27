@@ -37,9 +37,9 @@ def clean_model(data):
      'slope_2.0', 'slope_3.0', 'ca_0.0', 'ca_1.0', 'ca_2.0', 'ca_3.0']
 
     #thalch to end position
-    dataset = dataset[['age', 'trestbps', 'chol', 'oldpeak', 'thal', 'sex_female', 'sex_male', 'cp_typical_anign', 'cp_atypical_angina', 'cp_non_anginal_pain',
+    dataset = dataset[['age', 'trestbps', 'chol', 'oldpeak', 'thalach', 'sex_female', 'sex_male', 'cp_typical_anign', 'cp_atypical_angina', 'cp_non_anginal_pain',
      'cp_asymptomatic', 'fbs_<120', 'fbs_>120', 'restecg_normal', 'restecg_having_st_t', 'restecg_probable_ventricular_hypothropy', 'exang_0.0', 'exang_1.0', 'slope_1.0',
-     'slope_2.0', 'slope_3.0', 'ca_0.0', 'ca_1.0', 'ca_2.0', 'ca_3.0','thalach']]
+     'slope_2.0', 'slope_3.0', 'ca_0.0', 'ca_1.0', 'ca_2.0', 'ca_3.0','thal']]
 
     a = os.path.join(os.path.split(os.getcwd())[0], "data/model.csv")
     dataset.to_csv(a, sep=',', index=False)
