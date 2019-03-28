@@ -26,7 +26,7 @@ def dnn(data, seed):
     classifier.compile(optimizer ='adam',loss='binary_crossentropy', metrics =['accuracy'])
     classifier.fit(X_train,y_train, batch_size=10, epochs=100)
     y_pred=(classifier.predict(X_test) > 0.5)
-    print(confusion_matrix(y_test, y_pred))
+    # print(confusion_matrix(y_test, y_pred))
 
 def pca():
     pass
