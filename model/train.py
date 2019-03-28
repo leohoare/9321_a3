@@ -1,8 +1,10 @@
 import tensorflow as tf
 import numpy as np
 import pandas as pd
-import os
-
+from keras.models import Sequential
+from keras.layers import Dense
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix
 
 def train_knn():
     pass
@@ -10,21 +12,30 @@ def train_knn():
 def train_random_forest():
     pass
 
-def logistic_regression():
+def logistic_regression(data):
     pass
+
+
+def dnn(data, seed):
+    X, y = np.split(data, [-1], axis=1)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+    classifier = Sequential()
+    classifier.add(Dense(20, activation='relu', kernel_initializer="random_normal",input_dim=len(X.columns)))
+    classifier.add(Dense(10, activation='relu', kernel_initializer="random_normal"))
+    classifier.add(Dense(1, activation='sigmoid', kernel_initializer="random_normal"))
+    classifier.compile(optimizer ='adam',loss='binary_crossentropy', metrics =['accuracy'])
+    classifier.fit(X_train,y_train, batch_size=10, epochs=100)
+    y_pred=(classifier.predict(X_test) > 0.5)
+    print(confusion_matrix(y_test, y_pred))
 
 def pca():
     pass
 
-
-
-
-
 if __name__=="__main__":
-    model = os.path.join(os.path.split(os.getcwd())[0], "data/model.csv")
-    analytics = os.path.join(os.path.split(os.getcwd())[0], "data/analytics.csv")
-    model = pd.read_csv(model)
-    analytics = pd.read_csv(analytics)
+    # like os method, assumes file is run from file location #
+    model = pd.read_csv("./../data/model.csv")
 
-    print(model.head())
-    print(analytics.head())
+    # analytics only used in visualisation?
+    #analytics = pd.read_csv("./../data/analytics.csv")
+    
+    dnn(model, 2)

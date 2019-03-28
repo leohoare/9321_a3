@@ -1,13 +1,15 @@
 numpy==1.16.2
 pandas==0.24.2
+# BE
 Flask==1.0.2
 Flask-SQLAlchemy==2.3.2
 sklearn==0.0
 SQLAlchemy==1.2.17
-
-
+Keras==2.2.4
+tensorflow==1.13.1
 
 ### Add as you need ###
+### can be cleaner to install based on package used rather than dependencies ###
 
 #absl-py==0.7.1
 #alembic==1.0.7
@@ -18,7 +20,6 @@ SQLAlchemy==1.2.17
 #Flask-WTF==0.14.2
 #gast==0.2.2
 #grpcio==1.19.0
-#h5py==2.9.0
 #itsdangerous==1.1.0
 #Jinja2==2.10
 #Keras-Applications==1.0.7
@@ -36,10 +37,8 @@ SQLAlchemy==1.2.17
 #repoze.lru==0.7
 #Routes==2.4.1
 #scikit-learn==0.20.3
-#scipy==1.2.1
-#six==1.11.0
 #tensorboard==1.13.1
-#tensorflow==1.13.1
+#
 #tensorflow-estimator==1.13.0
 #termcolor==1.1.0
 #Werkzeug==0.14.1
