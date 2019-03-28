@@ -5,14 +5,16 @@ Flask-SQLAlchemy==2.3.2
 sklearn==0.0
 SQLAlchemy==1.2.17
 
+
+
+### Add as you need ###
+
 #absl-py==0.7.1
 #alembic==1.0.7
 #astor==0.7.1
 #Click==7.0
 #config==0.4.0
-
 #Flask-Migrate==2.3.1
-
 #Flask-WTF==0.14.2
 #gast==0.2.2
 #grpcio==1.19.0
@@ -25,7 +27,6 @@ SQLAlchemy==1.2.17
 #Markdown==3.1
 #MarkupSafe==1.1.0
 #mock==2.0.0
-
 #pbr==5.1.3
 #protobuf==3.7.0
 #python-dateutil==2.7.5
@@ -37,7 +38,6 @@ SQLAlchemy==1.2.17
 #scikit-learn==0.20.3
 #scipy==1.2.1
 #six==1.11.0
-
 #tensorboard==1.13.1
 #tensorflow==1.13.1
 #tensorflow-estimator==1.13.0
