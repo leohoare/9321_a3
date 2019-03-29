@@ -18,7 +18,7 @@ def logistic_regression(data):
 
 def dnn(data, seed):
     X, y = np.split(data, [-1], axis=1)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.8)
     classifier = Sequential()
     classifier.add(Dense(20, activation='relu', kernel_initializer="random_normal",input_dim=len(X.columns)))
     classifier.add(Dense(10, activation='relu', kernel_initializer="random_normal"))
@@ -26,7 +26,7 @@ def dnn(data, seed):
     classifier.compile(optimizer ='adam',loss='binary_crossentropy', metrics =['accuracy'])
     classifier.fit(X_train,y_train, batch_size=10, epochs=100)
     y_pred=(classifier.predict(X_test) > 0.5)
-    # print(confusion_matrix(y_test, y_pred))
+    print(confusion_matrix(y_test, y_pred))
 
 def pca():
     pass
