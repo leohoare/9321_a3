@@ -8,6 +8,10 @@ SQLAlchemy==1.2.17
 Keras==2.2.4
 tensorflow==1.13.1
 seaborn==0.9.0
+
+### TODO: NEED TO ADD MATPLOTLIB ###
+
+
 ### Add as you need ###
 ### can be cleaner to install based on package used rather than dependencies ###
 
