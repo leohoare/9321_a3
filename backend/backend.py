@@ -70,6 +70,23 @@ from flask_cors import CORS
 #                 print(ex) 
 #     db.session.commit()
 
+AxisMapping = {
+        1: "Age",
+        2: "Sex (1: male; 0: female)",
+        3: "chest pain type (1:typical angin, 2:atypical angina, 3:non-anginal pain, 4:asymptomatic)",
+        4: "resting blood pressure",
+        5: "serum cholestoral in mg/dl",
+        6: "fasting blood sugar > 120 mg/dl",
+        7: "resting electrocardiographic (0:normal, 1:ST-T wave abnormality, 2:left ventricular hypertrophy)",
+        8: "maximum heart rate achieved",
+        9: "exercise induced angina",
+        10: "oldpeak = ST depression induced by exercise relative to rest",
+        11: "the slope of the peak exercise ST segment",
+        12: "number of major vessels (0-3) colored by flourosopy",
+        13: "thal(Thalassemia): 3 = normal; 6 = fixed defect; 7 = reversable defect"
+    }
+
+
 "API "
 app = Flask(__name__)
 # to enable CORS for local development
@@ -109,11 +126,10 @@ class DataAcesss(Resource):
 class DataAcesss(Resource):
     @api.doc(responses={200: 'Success', 400: 'Incorrect input by user'})
 
-    # NOT WORKING YET
     def get(self,agesex,indicator):
-        if agesex.lower() == 'sex' or agesex == '1':
+        if agesex.lower() == 'age' or agesex == '1':
             agesex = 1
-        elif agesex.lower() == 'age' or agesex == '2':
+        elif agesex.lower() == 'sex' or agesex == '2':
             agesex = 2
         else:
             abort(400, 'agesex must be in set {age,sex,1,2}')
@@ -121,15 +137,26 @@ class DataAcesss(Resource):
             abort(400, 'indicator must be between 3 and 13')
         col1 = df.columns[agesex-1]
         col2 = df.columns[indicator-1]
-        # print(df["age"],df["chol"])
-        sns.regplot(x=df["age"], y=df["chol"])
-        # canvas = FigureCanvas(plt.savefig())
+        sns.set(font_scale=0.5, style="whitegrid")
+
+        if agesex == 1: # Age
+            if indicator in [3,6,7,9,11,12,13]: #Categorical data
+                graph = sns.boxplot(x=df[col2], y=df[col1])
+                graph.set(xlabel=AxisMapping[indicator], ylabel=AxisMapping[agesex])
+            else: #Numerical data
+                graph = sns.regplot(x=df[col1], y=df[col2])
+                graph.set(xlabel=AxisMapping[agesex], ylabel=AxisMapping[indicator])
+        else: # Sex
+            if indicator in [3,6,7,9,11,12,13]:
+                graph = sns.countplot(x=col1, data=df, hue=col2)
+                graph.set(xlabel=AxisMapping[agesex], title="Count " + AxisMapping[indicator] )
+            else:
+                graph = sns.boxplot(x=df[col1], y=df[col2])
+                graph.set(xlabel=AxisMapping[agesex], ylabel=AxisMapping[indicator])
         img = io.BytesIO()
         plt.savefig(img, format='png')
+        plt.clf()
         img.seek(0)
-        # resp = make_response(img.getvalue())
-        # resp.mimetype = 'image/png'
-        # print(img.getvalue().decode('UTF-8'))
         return {"bytearray" : base64.b64encode(img.getvalue()).decode()},200
 
 if __name__ == '__main__':

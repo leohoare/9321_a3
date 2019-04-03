@@ -29,11 +29,11 @@ class GenericGraph extends Component {
     }
 
     indicatorMapping = {
-        3: "chest pain type (1=typical angin,2=atypical angina,3=non-anginal pain,4=asymptomatic)",
+        3: "chest pain type (1=typical angin, 2=atypical angina, 3=non-anginal pain, 4=asymptomatic)",
         4: "resting blood pressure",
         5: "serum cholestoral in mg/dl",
         6: "fasting blood sugar > 120 mg/dl",
-        7: "resting electrocardiographic results (0=normal,1=having ST-T wave abnormality (T wave inversions and/or ST elevation or depression of > 0.05 mV),2=showing probable or definite left ventricular hypertrophy by Estes’ criteria)",
+        7: "resting electrocardiographic results (0=normal, 1=having ST-T wave abnormality, 2=showing left ventricular hypertrophy)",
         8: "maximum heart rate achieved",
         9: "exercise induced angina",
         10: "oldpeak = ST depression induced by exercise relative to rest",

@@ -22,10 +22,11 @@ class App extends Component {
               graphType='Scatter'
             />
           </TabPane>
+          {/* Can only rending one at a time... */}
           <TabPane tab="BEGraph" key="4">
             <BEGraph
-              agesex='1'
-              indicator='4'
+              agesex='2'
+              indicator='13'
               localURL="http://localhost:5000/"
             />
           </TabPane>
