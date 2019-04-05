@@ -48,6 +48,20 @@ def clean_model(data):
 
     a = os.path.join(os.path.split(os.getcwd())[0], "data/model.csv")
     dataset.to_csv(a, sep=',', index=False)
+    return dataset
+
+
+#extract mean and sd of the data and return pandas
+def meanAndSd(data):
+    stats = pd.DataFrame()
+    stats["mean"] = data.mean()
+    stats["Std.Dev"] = data.std()
+    stats = stats.T
+    stats = stats.drop(['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca','thal','target'],axis=1)
+
+    a = os.path.join(os.path.split(os.getcwd())[0], "normalised.csv")
+    stats.to_csv("./../data/normalised.csv", sep=',', index=False)
+
 
 
 if __name__ == "__main__":
