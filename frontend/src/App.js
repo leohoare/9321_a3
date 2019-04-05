@@ -13,7 +13,7 @@ class App extends Component {
       <div className="App">
         <Tabs defaultActiveKey="1">
           <TabPane tab="lines" key="1"><LineGraph/></TabPane>
-          <TabPane tab="Factors" key="2"><Factors/></TabPane>
+          <TabPane tab="Factors" key="2"><Factors localURL="http://localhost:5000/"/></TabPane>
           <TabPane tab="FEGraph" key="3">
             <GenericGraph
               agesex='1'
@@ -25,8 +25,8 @@ class App extends Component {
           {/* Can only rending one at a time... */}
           <TabPane tab="BEGraph" key="4">
             <BEGraph
-              agesex='2'
-              indicator='13'
+              agesex='1'
+              indicator='3'
               localURL="http://localhost:5000/"
             />
           </TabPane>
