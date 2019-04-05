@@ -5,6 +5,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
+from sklearn.linear_model import LogisticRegression
 
 def train_knn():
     pass
@@ -12,11 +13,16 @@ def train_knn():
 def train_random_forest():
     pass
 
-def logistic_regression(data):
-    pass
+def logreg(data):
+    X, y = np.split(data, [-1], axis=1)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.8)
+    lr = LogisticRegression(solver="liblinear", max_iter=100)
+    lr.fit(X_train,y_train.values.ravel())
+    y_pred=lr.predict(X_test)
+    print(lr.coef_, lr.intercept_)
+    print(confusion_matrix(y_test, y_pred))
 
-
-def dnn(data, seed):
+def dnn(data):
     X, y = np.split(data, [-1], axis=1)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.8)
     classifier = Sequential()
@@ -38,4 +44,5 @@ if __name__=="__main__":
     # analytics only used in visualisation?
     #analytics = pd.read_csv("./../data/analytics.csv")
     
-    dnn(model, 2)
+    # dnn(model)
+    logreg(model)
