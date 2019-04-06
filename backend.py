@@ -14,9 +14,9 @@ from flask_restplus import Resource, Api, reqparse, fields
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
-sys.path.append('../')
-from model.train import logreg 
 
+from model.train import logreg 
+from model.model import prediction_clean_data
 
 AxisMapping = {
         1: "Age",
@@ -113,8 +113,60 @@ class getcoefficients(Resource):
     def get(self):
         return logreg(df_model)
         
+@api.route('/getprediction/')
+class postprediction(Resource):
+    @api.doc(body=api.model("payload", {
+        "modeltype":fields.String(description="modeltype",required=False),
+        "age":fields.Integer(description="age",required=True),
+        "sex":fields.Boolean(description="sex",required=True),
+        "cp":fields.Integer(description="cp",required=True),
+        "trestbps":fields.Integer(description="trestbps",required=True),
+        "chol":fields.Integer(description="chol",required=True),
+        "fbs":fields.Integer(description="fbs",required=True),
+        "restecg":fields.Integer(description="restecg",required=True),
+        "thalach":fields.Integer(description="thalach",required=True),
+        "exang":fields.Boolean(description="exang",required=True),
+        "oldpeak":fields.Float(description="oldpeak",required=True),
+        "slope":fields.Integer(description="slope",required=True),
+        "ca":fields.Integer(description="ca",required=True),
+        "thal":fields.Integer(description="thal",required=True),
+        }),\
+    responses={200: 'Success', 400: 'Incorrect input by user'})
+    def post(self):
+        jsonreq = request.get_json()
+        modeltype = ""
+        for field in jsonreq:
+            if field not in ["modeltype", "thal"]:
+                if jsonreq[f"{field}"] < df[f"{field}"].min() or jsonreq[f"{field}"] > df[f"{field}"].max():
+                    abort(400, f'{field} must be between { df[f"{field}"].min()} and {df[f"{field}"].max()}')
+            if field == "thal":
+                if jsonreq[f'{field}'] not in [3,6,7]:
+                    abort(400, f'thal must be between either 3, 6 or 7')
+            if field == "modeltype":
+                if jsonreq["modeltype"] is not None:
+                    if jsonreq["modeltype"].lower() in ["knn","dnn","logreg",""]:
+                        modeltype=jsonreq["modeltype"].lower()
+                    else:
+                        abort(400, 'modeltype must be in [knn,dnn,logreg]')
+        
+
+        if modeltype:
+            pass
+
+        # error checking
+        # if jsonreq["age"] < df["age"].min() or jsonreq["age"] > df["age"].max():
+        #     abort(400, f'age must be between { df["age"].min()} and {df["age"].max()}')
+        # if jsonreq["sex"] not in [0,1]:
+        #     abort(400, f'sex must be boolean value')
+        # if jsonreq["cp"] < df["cp"].min() or jsonreq["cp"] > df["cp"].max():
+        #     abort(400, f'cp must be between { df["age"].min()} and {df["age"].max()}')
+
+
+        return 200
 
 if __name__ == '__main__':
-    df = pd.read_csv("./../data/analytics.csv")
-    df_model = pd.read_csv("./../data/model.csv")
+    
+    df = pd.read_csv("./data/analytics.csv")
+    df_model = pd.read_csv("./data/model.csv")
+    df_norm = pd.read_csv("./data/normalised.csv")
     app.run(debug=True)
