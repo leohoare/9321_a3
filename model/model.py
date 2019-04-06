@@ -96,11 +96,11 @@ def prediction_clean_data(analytics, normalised_data):
     for i in n_column:
         if i in predict_final_data:
             pass
-           #predict_final_data[i][0] = n_column[i][0]
+        #    predict_final_data[i][0] = n_column[i][0]
     for i in c_dataset:
         if i in predict_final_data:
             pass
-            #predict_final_data[i][0] = c_dataset[i][0]
+            # predict_final_data[i][0] = c_dataset[i][0]
     return predict_final_data
 
 

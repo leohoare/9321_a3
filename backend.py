@@ -3,7 +3,6 @@ import base64
 import io
 import json
 import pandas as pd
-import time
 
 # ### ADD SEABORN PLOT / MATPLOTLIB TO REQUIREMENTS IF WE WANT IT ###
 import seaborn as sns
@@ -113,7 +112,7 @@ class getcoefficients(Resource):
     @api.doc(responses={200: 'Success'})
     def get(self):
         return logregcoeff(df_model)
-        
+
 @api.route('/getprediction/')
 class postprediction(Resource):
     @api.doc(body=api.model("payload", {
@@ -134,7 +133,6 @@ class postprediction(Resource):
         }),\
     responses={200: 'Success', 400: 'Incorrect input by user'})
     def post(self):
-        now = time.time()
         jsonreq = request.get_json()
         modeltype = ""
         for field in jsonreq:
@@ -150,8 +148,10 @@ class postprediction(Resource):
                         modeltype=jsonreq["modeltype"].lower()
                     else:
                         abort(400, 'modeltype must be in [knn,dnn,logreg]')
-        
-
+        pred_values = pd.DataFrame.from_dict({field:[jsonreq[field]] for field in jsonreq if field != "modeltype"})
+        print(pred_values)
+        pred_values = prediction_clean_data(pred_values,df_norm)
+        print(pred_values)
         if modeltype:
             if modeltype == "knn":
                 return knn(df_model),200
@@ -164,7 +164,6 @@ class postprediction(Resource):
             "knn" : knn(df_model),
             "dnn" : dnn(df_model),
             "logreg" : logreg(df_model),
-            "time" : now-time.time()
         }, 200
 
 if __name__ == '__main__':

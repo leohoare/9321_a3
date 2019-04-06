@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import pandas as pd
+import time
 from keras.models import Sequential
 from keras.layers import Dense
 from sklearn.model_selection import train_test_split
@@ -31,6 +32,7 @@ def train_random_forest():
 
 
 def knn(data):
+    past = time.time()
     X, y = np.split(data, [-1], axis=1)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
     knn_model = KNeighborsClassifier(n_neighbors=4)
@@ -43,9 +45,11 @@ def knn(data):
         "no_incorrect" : int(matrix[0][1]),
         "yes_correct" : int(matrix[1][1]),
         "yes_incorrect" : int(matrix[1][0]),
+        "time": time.time()-past
     }
 
 def logreg(data):
+    past = time.time()
     X, y = np.split(data, [-1], axis=1)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
     lr = LogisticRegression(solver="liblinear", max_iter=100)
@@ -58,6 +62,7 @@ def logreg(data):
         "no_incorrect" : int(matrix[0][1]),
         "yes_correct" : int(matrix[1][1]),
         "yes_incorrect" : int(matrix[1][0]),
+        "time": time.time()-past
     }
 
 def logregcoeff(data):
@@ -71,6 +76,7 @@ def logregcoeff(data):
     return data
 
 def dnn(data):
+    past = time.time()
     X, y = np.split(data, [-1], axis=1)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
     classifier = Sequential()
@@ -87,4 +93,6 @@ def dnn(data):
         "no_incorrect" : int(matrix[0][1]),
         "yes_correct" : int(matrix[1][1]),
         "yes_incorrect" : int(matrix[1][0]),
+        "time": time.time()-past
     }
+
