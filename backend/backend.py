@@ -1,10 +1,9 @@
-import os
-import csv
-import re
-# import StringIO
+import sys
 import base64
 import io
+
 import pandas as pd
+
 # ### ADD SEABORN PLOT / MATPLOTLIB TO REQUIREMENTS IF WE WANT IT ###
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -15,60 +14,9 @@ from flask_restplus import Resource, Api, reqparse, fields
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
+sys.path.append('../')
+from model.train import logreg 
 
-# def create_db(db_file):
-#     ''' Create db file in working directory '''
-#     global db, Entry
-#     basedir = os.path.abspath(os.path.dirname(__file__))
-#     app.config['SQLALCHEMY_DATABASE_URI'] =  'sqlite:///' + os.path.join(basedir,'../data/', db_file)
-#     db = SQLAlchemy(app)
-
-#     # age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,target
-#     # nullable for now
-#     class Entry(db.Model):
-#         id = db.Column(db.Integer, primary_key=True)
-#         age = db.Column(db.Integer, nullable=False)
-#         sex = db.Column(db.Boolean, nullable=False)
-#         cp = db.Column(db.Integer, nullable=False)       
-#         restbp = db.Column(db.Integer, nullable=False)
-#         chol = db.Column(db.Integer, nullable=False)
-#         fbs = db.Column(db.Boolean, nullable=False)
-#         restecg = db.Column(db.Integer, nullable=False)
-#         maxhr = db.Column(db.Integer, nullable=False)
-#         exang = db.Column(db.Boolean, nullable=False)
-#         oldpeak = db.Column(db.Float(4,4), nullable=False)
-#         slope = db.Column(db.Integer, nullable=False)
-#         numves = db.Column(db.Integer, nullable=False)
-#         thal = db.Column (db.Integer, nullable=False)
-#         # target = db.Column (db.Integer, nullable=True)
-
-#     db.create_all()
-#     return db
-
-# def populate_db(file_path):
-#     global db, Entry
-#     with open(file_path) as csv_file:
-#         csv_reader = csv.reader(csv_file, delimiter=',')
-#         for row in csv_reader:
-#             try:
-#                 db.session.add(Entry(\
-#                 age = row[0], \
-#                 sex = bool(row[1]), \
-#                 cp = row[2], \
-#                 restbp = row[3], \
-#                 chol = row[4], \
-#                 fbs = bool(row[5]), \
-#                 restecg = row[6], \
-#                 maxhr = row[7], \
-#                 exang = bool(row[8]), \
-#                 oldpeak = row[9], \
-#                 slope = row[10], \
-#                 numves = row[11], \
-#                 thal = row[12], \
-#                     ))
-#             except Exception as ex:
-#                 print(ex) 
-#     db.session.commit()
 
 AxisMapping = {
         1: "Age",
@@ -96,7 +44,7 @@ api = Api(app, title='Backend for 9321 a3', description='', default="Actions",  
 
 
 @api.route('/getdata/<string:agesex>/<int:indicator>')
-class DataAcesss(Resource):
+class getdata(Resource):
     @api.doc(responses={200: 'Success', 400: 'Incorrect input by user'})
     def get(self,agesex,indicator):
         if agesex.lower() == 'sex' or agesex == '1':
@@ -123,7 +71,7 @@ class DataAcesss(Resource):
 
 
 @api.route('/getgraph/<string:agesex>/<int:indicator>')
-class DataAcesss(Resource):
+class getgraph(Resource):
     @api.doc(responses={200: 'Success', 400: 'Incorrect input by user'})
 
     def get(self,agesex,indicator):
@@ -159,8 +107,14 @@ class DataAcesss(Resource):
         img.seek(0)
         return {"bytearray" : base64.b64encode(img.getvalue()).decode()},200
 
+@api.route('/getcoefficients/')
+class getcoefficients(Resource):
+    @api.doc(responses={200: 'Success'})
+    def get(self):
+        return logreg(df_model)
+        
+
 if __name__ == '__main__':
-    # create_db('data.db')
-    # populate_db('../data/processed.cleveland.data')
     df = pd.read_csv("./../data/analytics.csv")
+    df_model = pd.read_csv("./../data/model.csv")
     app.run(debug=True)
