@@ -80,15 +80,15 @@ def logreg(data):
     lr = LogisticRegression(solver="liblinear", max_iter=100)
     lr.fit(X_train,y_train.values.ravel())
     y_pred=lr.predict(X_test)
-    print(y_pred[0])
-    print(sigmoid(0))
+    #print(y_pred[0])
+    #print(sigmoid(0))
     
     # calculates propbability..
     # print(sigmoid(lr.intercept_[0] + sum([X_test.iloc[0][i]*lr.coef_[0][i] for i in range(len(X_test.iloc[0]))])))
     
-    print(lr.coef_, lr.intercept_)
-    print(confusion_matrix(y_test, y_pred))
-    print([i for i in range(len(X_test.iloc[0]))])
+    #print(lr.coef_, lr.intercept_)
+    #print(confusion_matrix(y_test, y_pred))
+    #print([i for i in range(len(X_test.iloc[0]))])
     # print( X.colums[i] for i in range(len(X.columns)))
     data = {}
     for i in range(len(X.columns)):
@@ -109,7 +109,8 @@ def dnn(data):
     classifier.compile(optimizer ='adam',loss='binary_crossentropy', metrics =['accuracy'])
     classifier.fit(X_train,y_train, batch_size=10, epochs=100)
     y_pred=(classifier.predict(X_test) > 0.5)
-    print(confusion_matrix(y_test, y_pred))
+    #print(confusion_matrix(y_test, y_pred))
+
 
 def pca():
     pass
