@@ -15,6 +15,7 @@ import pickle
 
 from model import clean_model
 from model import meanAndSd
+from model import prediction_clean_data
 import matplotlib.pyplot as plt
 
 
@@ -44,47 +45,34 @@ def train_knn(data):
 
 
 
+
+"""
+Parameters:
+            :arg Analytics : Takes Pandas data frame 
+            :arg normalised_data: which is already generated so don't change unless we have new data
+            :arg fil : saved model file, default is knn_model
+"""
+
+
 def predict_Data(analytics, normalised_data = "normalised.csv",file = "knn_model.sav"):
 
     normalised_data = pd.read_csv("./../data/{}".format(normalised_data))
     #splitting categorical values
     columns_to_normalise = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak']
     n_column  = analytics[columns_to_normalise]
+
     analytics = analytics.drop(columns_to_normalise,axis =1)
     categorical_data = analytics
     #to normalise we need to reduce the age  testbps chol thalach oldpeak
     #iteratively
-    for i in n_column:
-        if i in normalised_data:
-            n_column[i][0] = (n_column[i][0]-normalised_data[i][0])/normalised_data[i][1]
-    #normalised of continues values done
-    #print(categorical_data)
-    c_dataset = pd.get_dummies(categorical_data, columns=['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal'])
-    ##hacky way
-    prediction_data = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak',
-                       'sex_0.0', 'sex_1.0', 'cp_1.0', 'cp_2.0', 'cp_3.0',
-                       'cp_4.0', 'fbs_0.0', 'fbs_1.0', 'restecg_0.0', 'restecg_1.0',
-                       'restecg_2.0', 'exang_0.0', 'exang_1.0', 'slope_1.0', 'slope_2.0',
-                       'slope_3.0', 'ca_0.0', 'ca_1.0', 'ca_2.0', 'ca_3.0', 'thal_3.0', 'thal_6.0',
-                       'thal_7.0']
-    predict_final_data = pd.DataFrame(0.0 , index= np.arange(len(prediction_data)),columns =prediction_data)
-    predict_final_data = predict_final_data.head(1)
-
-    #copying data frame values
-    for i in n_column:
-        if i in predict_final_data:
-            predict_final_data[i][0] = n_column[i][0]
-    for i in c_dataset:
-        if i in predict_final_data:
-            predict_final_data[i][0] = c_dataset[i][0]
+    x_test = prediction_clean_data(n_column,normalised_data,categorical_data)
 
      #finally load and predict data
     model = joblib.load(file)
-    result = model.predict(predict_final_data)
+    result = model.predict(x_test)
 
 
     return result
-
 
 
 
@@ -142,33 +130,11 @@ def clean_model_manual_normalisation(data,normalised_data):
 if __name__=="__main__":
     # like os method, assumes file is run from file location #
     model = pd.read_csv("./../data/model.csv")
-
     train_knn(model)
-    # analytics only used in visualisation?
-    #analytics = pd.read_csv("./../data/analytics.csv")
     # dnn(model)
     #logreg(model)
     ## all testing after this one
-    analytics = pd.read_csv("./../data/analytics.csv")
-
-    """
-    This is all for testing the function and not actual use for us 
-    """
-    #manual mean and sd transformation
-    analytics = analytics.head(1)
-
-    y_predict = analytics['target']
-
-    analytics = analytics.drop('target',axis = 1)
-
-
-    predict_Data(analytics)
-    """
-    testing done
-    """
-    #analytics = clean_model(analytics)
     #print (analytics)
-
     #normalise new data
     #dnn(model, 2)
 
