@@ -65,10 +65,19 @@ def meanAndSd(data):
 
 """
 Clean data for single unknown x values
+analytics = unknown x_values 
+normalised_data = normalised_data for the trained datas
+
 """
-def prediction_clean_data(n_column, normalised_data, categorical_data):
+def prediction_clean_data(analytics, normalised_data):
+    columns_to_normalise = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak']
+    n_column = analytics[columns_to_normalise]
+
+    analytics = analytics.drop(columns_to_normalise, axis=1)
+    categorical_data = analytics
     for i in n_column:
         if i in normalised_data:
+            pass
             n_column[i][0] = (n_column[i][0]-normalised_data[i][0])/normalised_data[i][1]
     #normalised of continues values done
     #print(categorical_data)
@@ -86,10 +95,12 @@ def prediction_clean_data(n_column, normalised_data, categorical_data):
     #copying data frame values
     for i in n_column:
         if i in predict_final_data:
-            predict_final_data[i][0] = n_column[i][0]
+            pass
+           #predict_final_data[i][0] = n_column[i][0]
     for i in c_dataset:
         if i in predict_final_data:
-            predict_final_data[i][0] = c_dataset[i][0]
+            pass
+            #predict_final_data[i][0] = c_dataset[i][0]
     return predict_final_data
 
 

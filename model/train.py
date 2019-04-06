@@ -58,14 +58,10 @@ def predict_Data(analytics, normalised_data = "normalised.csv",file = "knn_model
 
     normalised_data = pd.read_csv("./../data/{}".format(normalised_data))
     #splitting categorical values
-    columns_to_normalise = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak']
-    n_column  = analytics[columns_to_normalise]
 
-    analytics = analytics.drop(columns_to_normalise,axis =1)
-    categorical_data = analytics
     #to normalise we need to reduce the age  testbps chol thalach oldpeak
     #iteratively
-    x_test = prediction_clean_data(n_column,normalised_data,categorical_data)
+    x_test = prediction_clean_data(analytics,normalised_data)
 
      #finally load and predict data
     model = joblib.load(file)
