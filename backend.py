@@ -151,7 +151,9 @@ class postprediction(Resource):
         pred_values = pd.DataFrame.from_dict({field:[jsonreq[field]] for field in jsonreq if field != "modeltype"})
         print(pred_values)
         pred_values = prediction_clean_data(pred_values,df_norm)
+
         print(pred_values)
+        """
         if modeltype:
             if modeltype == "knn":
                 return knn(df_model),200
@@ -165,7 +167,8 @@ class postprediction(Resource):
             "dnn" : dnn(df_model),
             "logreg" : logreg(df_model),
         }, 200
-
+        """
+        return "ok",200
 if __name__ == '__main__':
     
     df = pd.read_csv("./data/analytics.csv")

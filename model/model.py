@@ -70,17 +70,20 @@ normalised_data = normalised_data for the trained datas
 
 """
 def prediction_clean_data(analytics, normalised_data):
+
     columns_to_normalise = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak']
     n_column = analytics[columns_to_normalise]
 
     analytics = analytics.drop(columns_to_normalise, axis=1)
     categorical_data = analytics
+    n_column = n_column.astype('float')
+
     for i in n_column:
         if i in normalised_data:
-            pass
-            n_column[i][0] = (n_column[i][0]-normalised_data[i][0])/normalised_data[i][1]
+            n_column[i][0] = (n_column[i][0]-normalised_data[i][0])/normalised_data[i][0]
+
     #normalised of continues values done
-    #print(categorical_data)
+    categorical_data = categorical_data.astype('float')
     c_dataset = pd.get_dummies(categorical_data, columns=['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal'])
     ##hacky way
     prediction_data = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak',
@@ -89,18 +92,18 @@ def prediction_clean_data(analytics, normalised_data):
                        'restecg_2.0', 'exang_0.0', 'exang_1.0', 'slope_1.0', 'slope_2.0',
                        'slope_3.0', 'ca_0.0', 'ca_1.0', 'ca_2.0', 'ca_3.0', 'thal_3.0', 'thal_6.0',
                        'thal_7.0']
+
     predict_final_data = pd.DataFrame(0.0 , index= np.arange(len(prediction_data)),columns =prediction_data)
     predict_final_data = predict_final_data.head(1)
 
     #copying data frame values
     for i in n_column:
         if i in predict_final_data:
-            pass
-        #    predict_final_data[i][0] = n_column[i][0]
+             predict_final_data[i][0] = n_column[i][0]
+
     for i in c_dataset:
         if i in predict_final_data:
-            pass
-            # predict_final_data[i][0] = c_dataset[i][0]
+            predict_final_data[i][0] = c_dataset[i][0]
     return predict_final_data
 
 
