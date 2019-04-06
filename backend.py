@@ -1,8 +1,9 @@
 import sys
 import base64
 import io
-
+import json
 import pandas as pd
+import time
 
 # ### ADD SEABORN PLOT / MATPLOTLIB TO REQUIREMENTS IF WE WANT IT ###
 import seaborn as sns
@@ -15,7 +16,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
 
-from model.train import logreg 
+from model.train import logregcoeff, logreg, knn, dnn
 from model.model import prediction_clean_data
 
 AxisMapping = {
@@ -111,7 +112,7 @@ class getgraph(Resource):
 class getcoefficients(Resource):
     @api.doc(responses={200: 'Success'})
     def get(self):
-        return logreg(df_model)
+        return logregcoeff(df_model)
         
 @api.route('/getprediction/')
 class postprediction(Resource):
@@ -133,6 +134,7 @@ class postprediction(Resource):
         }),\
     responses={200: 'Success', 400: 'Incorrect input by user'})
     def post(self):
+        now = time.time()
         jsonreq = request.get_json()
         modeltype = ""
         for field in jsonreq:
@@ -151,18 +153,19 @@ class postprediction(Resource):
         
 
         if modeltype:
-            pass
+            if modeltype == "knn":
+                return knn(df_model),200
+            elif modeltype == "dnn":
+                return dnn(df_model),200
+            elif modeltype == "logreg":
+                return logreg(df_model),200
 
-        # error checking
-        # if jsonreq["age"] < df["age"].min() or jsonreq["age"] > df["age"].max():
-        #     abort(400, f'age must be between { df["age"].min()} and {df["age"].max()}')
-        # if jsonreq["sex"] not in [0,1]:
-        #     abort(400, f'sex must be boolean value')
-        # if jsonreq["cp"] < df["cp"].min() or jsonreq["cp"] > df["cp"].max():
-        #     abort(400, f'cp must be between { df["age"].min()} and {df["age"].max()}')
-
-
-        return 200
+        return {
+            "knn" : knn(df_model),
+            "dnn" : dnn(df_model),
+            "logreg" : logreg(df_model),
+            "time" : now-time.time()
+        }, 200
 
 if __name__ == '__main__':
     
