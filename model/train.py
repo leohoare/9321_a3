@@ -134,28 +134,6 @@ def pca():
     pass
 
 
-def clean_model_manual_normalisation(data,normalised_data):
-
-    dataset = pd.get_dummies(data, columns=['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal'])
-    standardScaler = StandardScaler()
-
-    columns_to_scale = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak']
-
-    dataset[columns_to_scale] = standardScaler.fit_transform(dataset[columns_to_scale])
-
-    # hard_coding rename and arrangement
-
-    dataset.columns = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak',
-                       'sex_0.0', 'sex_1.0', 'cp_1.0', 'cp_2.0', 'cp_3.0',
-                       'cp_4.0', 'fbs_0.0', 'fbs_1.0', 'restecg_0.0', 'restecg_1.0',
-                       'restecg_2.0', 'exang_0.0', 'exang_1.0', 'slope_1.0', 'slope_2.0',
-                       'slope_3.0', 'ca_0.0', 'ca_1.0', 'ca_2.0', 'ca_3.0', 'thal_3.0', 'thal_6.0',
-                       'thal_7.0', 'target']
-
-    print(list(dataset))
-
-
-
 
 if __name__=="__main__":
     # like os method, assumes file is run from file location #
