@@ -1,98 +1,63 @@
 import React, { Component } from 'react';
-import {Chart,Geom,Axis,Tooltip} from "bizcharts";
-// import {Layout, Select} from "antd";
+import {Layout, Select,InputNumber} from "antd";
+import GenericGraph from "/GenericGraph"
 
-// const {Header, Content} = Layout;
-// const Option = Select.Option;
-
-// fake data
-const data = [
-    {
-      age: "10",
-      value: 30,
-    },
-    {
-      age: "20",
-      value: 40,
-    },
-    {
-      age: "30",
-      value: 35,
-    },
-    {
-      age: "40",
-      value: 50,
-    },
-    {
-      age: "50",
-      value: 49,
-    },
-    {
-      age: "60",
-      value: 60,
-    },
-    {
-      age: "70",
-      value: 70,
-    },
-    {
-      age: "80",
-      value: 90,
-    },
-    {
-      age: "90",
-      value: 130,
-    }
-  ];
-  const cols = {
-    value: {
-      min: 0
-    },
-    age: {
-      range: [0, 1]
-    }
-  };
-
-// {/* <Header>
-//     <Select defaultValue="both" style={{ width: 120 }} onChange={this.handleChange}>
-//         <Option value="male">male</Option>
-//         <Option value="female">female</Option>
-//         <Option value="both" >any sex</Option>                    <Option value="Yiminghe">yiminghe</Option>
-//     </Select>
-// </Header> */}
+const {Header, Content} = Layout;
+const Option = Select.Option;
 
 class LineGraph extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sex:"both"
+            sex:0,
+            age:0,
+            indicator:""
         };
     }
 
+    selectSex=(value)=>{
+      this.setState({sex: value})
+    }
+    selectAge=(value)=>{
+      this.setState({age: value})
+    }
+    selectIndicator=(value)=>{
+      this.setState({indicator: value})
+    }
 
     render() {
+      const{sex, age, indicator} = this.state;
+      const agesex = age.toString() + sex.toString();
       return (
         <div>
-          <Chart height={400} data={data} scale={cols} forceFit>
-          <Axis name="age" title />
-          <Axis name="value" title />
-          <Tooltip
-              crosshairs={{
-              type: "y"
-              }}
-          />
-          <Geom type="line" position="age*value" size={2} />
-          <Geom
-              type="point"
-              position="age*value"
-              size={4}
-              shape={"circle"}
-              style={{
-              stroke: "#fff",
-              lineWidth: 1
-              }}
-          />
-          </Chart>
+           <Header>
+              <Select placeholder="sex" style={{ width: 120 }} onChange={this.selectSex}>
+                  <Option value="1">male</Option>
+                  <Option value="0">female</Option>
+              </Select>
+              <InputNumber placeholder="age" min={0} max={100} onChange={this.selectAge} />
+              <Select placeholder="indicator" style={{ width: 120 }} onChange={this.selectIndicator}>
+                  <Option value="cp">chest pain type</Option>
+                  <Option value="trestbps">resting blood pressure</Option>
+                  <Option value="chol">serum cholestoral</Option>
+                  <Option value="fbs">fasting blood sugar</Option>
+                  <Option value="restecg">resting electrocardiographic </Option>
+                  <Option value="thalach">maximum heart rate achieved</Option>
+                  <Option value="exang">exercise induced angina</Option>
+                  <Option value="oldpeak">oldpeak</Option>
+                  <Option value="slope">slope of the peak exercise ST segment</Option>
+                  <Option value="ca">number of major vessels</Option>
+                  <Option value="thal">Thalassemia</Option>
+              </Select>
+          </Header>
+          <Content>
+          <GenericGraph
+              agesex={agesex}
+              indicator={indicator}
+              localURL="http://localhost:5000/"
+              graphType='Scatter'
+            />
+          </Content>
         </div>
       );
     }
