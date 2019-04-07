@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {Layout, Select, Form, Button, InputNumber} from "antd";
-// import GenericGraph from "/GenericGraph"
+import {Layout, Select, Form, Button} from "antd";
 
 const {Header, Content} = Layout;
 const Option = Select.Option;

@@ -4,6 +4,7 @@ import LineGraph from "./component/LineGraph";
 import Factors from "./component/Factors";
 import GenericGraph from "./component/GenericGraph"
 import BEGraph from "./component/BEGraph"
+import Form from './component/Form'
 
 const TabPane = Tabs.TabPane;
 
@@ -31,6 +32,9 @@ class App extends Component {
             />
           </TabPane>
         </Tabs>
+        <div className="form">
+          <Form />
+        </div>
       </div>
     );
   }
