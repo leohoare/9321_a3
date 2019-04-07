@@ -7,6 +7,7 @@ import App from "./App";
 
 // import "./index.css";
 import "antd/dist/antd.css";
+import "./css/primitive.css";
 
 ReactDOM.render(
   <Router>
