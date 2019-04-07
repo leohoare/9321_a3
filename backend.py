@@ -136,10 +136,10 @@ class postprediction(Resource):
         modeltype = ""
         for field in jsonreq:
             if field not in ["modeltype", "thal"]:
-                if jsonreq[f"{field}"] < df[f"{field}"].min() or jsonreq[f"{field}"] > df[f"{field}"].max():
+                if int(jsonreq[f"{field}"]) < df[f"{field}"].min() or int(jsonreq[f"{field}"]) > df[f"{field}"].max():
                     abort(400, f'{field} must be between { df[f"{field}"].min()} and {df[f"{field}"].max()}')
             if field == "thal":
-                if jsonreq[f'{field}'] not in [3,6,7]:
+                if int(jsonreq[f'{field}']) not in [3,6,7]:
                     abort(400, f'thal must be between either 3, 6 or 7')
             if field == "modeltype":
                 if jsonreq["modeltype"] is not None:

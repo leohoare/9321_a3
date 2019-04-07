@@ -33,10 +33,17 @@ class Form extends Component {
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-			},
-		}).then(response => {
-				console.log(response.json());
-		})
+			},})
+		.then(function(response) {
+			if (!response.status.ok) {
+				const error = new Error(response.body);
+				error.response = response;
+				throw error;
+			}})
+		.then(results => {return results.json()})
+		.then(jsonres => console.log(jsonres))
+		.catch(res => {return res});
+		// .catch(err => {test = err.json(); console.log(test)});
 	}
 
 
@@ -51,79 +58,79 @@ class Form extends Component {
 					name="modeltype"
 					value={modeltype}
 					onChange={this.onChange} />
-				<label>age</label>
+				<label>Age (integer)</label>
 				<input
 					type="text"
 					name="age"
 					value={age}
 					onChange={this.onChange} />
-				<label>sex</label>
+				<label>sex (1 = male; 0 = female)</label>
 				<input
 					type="text"
 					name="sex"
 					value={sex}
 					onChange={this.onChange} />
-				<label>cp</label>
+				<label> chest pain type (1=typical angin,2=atypical angina,3=non-anginal pain,4=asymptomatic)</label>
 				<input
 					type="text"
 					name="cp"
 					value={cp}
 					onChange={this.onChange} />
-				<label>trestbps</label>
+				<label>resting blood pressure</label>
 				<input
 					type="text"
 					name="trestbps"
 					value={trestbps}
 					onChange={this.onChange} />
-				<label>chol</label>
+				<label> serum cholestoral in mg/dl</label>
 				<input
 					type="text"
 					name="chol"
 					value={chol}
 					onChange={this.onChange} />
-				<label>fbs</label>
+				<label> fasting blood sugar > 120 mg/dl</label>
 				<input
 					type="text"
 					name="fbs"
 					value={fbs}
 					onChange={this.onChange} />
-				<label>restecg</label>
+				<label>resting electrocardiographic (0:normal, 1:ST-T wave abnormality, 2:left ventricular hypertrophy)</label>
 				<input
 					type="text"
 					name="restecg"
 					value={restecg}
 					onChange={this.onChange} />
-				<label>thalach</label>
+				<label>maximum heart rate achieved</label>
 				<input
 					type="text"
 					name="thalach"
 					value={thalach}
 					onChange={this.onChange} />
-				<label>exang</label>
+				<label>exercise induced angina</label>
 				<input
 					type="text"
 					name="exang"
 					value={exang}
 					onChange={this.onChange} />
-				<label>oldpeak</label>
+				<label>oldpeak = ST depression induced by exercise relative to rest</label>
 				<input
 					type="text"
 					name="oldpeak"
 					value={oldpeak}
 					onChange={this.onChange} />
-				<label>slope</label>
+				<label>the slope of the peak exercise ST segment</label>
 				<input
 					type="text"
 					name="slope"
 					value={slope}
 					onChange={this.onChange} />
-				<label>ca</label>
+				<label>number of major vessels (0-3) colored by flourosopy</label>
 				<input
 					type="text"
 					name="ca"
 					value={ca}
 					onChange={this.onChange} />
-				<label>thal</label>
+				<label>thal(Thalassemia): 3 = normal; 6 = fixed defect; 7 = reversable defect</label>
 				<input
 					type="text"
 					name="thal"
