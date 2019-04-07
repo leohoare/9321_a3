@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import {Tabs} from "antd";
 import LineGraph from "./component/LineGraph";
 import Factors from "./component/Factors";
-import GenericGraph from "./component/GenericGraph"
-import BEGraph from "./component/BEGraph"
-import Form from './component/Form'
+import Form from './component/Form';
 
 const TabPane = Tabs.TabPane;
 
@@ -15,26 +13,8 @@ class App extends Component {
         <Tabs defaultActiveKey="1">
           <TabPane tab="lines" key="1"><LineGraph localURL="http://localhost:5000/"/></TabPane>
           <TabPane tab="Factors" key="2"><Factors localURL="http://localhost:5000/"/></TabPane>
-          <TabPane tab="FEGraph" key="3">
-            <GenericGraph
-              agesex='1'
-              indicator='3'
-              localURL="http://localhost:5000/"
-              graphType='Scatter'
-            />
-          </TabPane>
-          {/* Can only rending one at a time... */}
-          <TabPane tab="BEGraph" key="4">
-            <BEGraph
-              agesex='1'
-              indicator='3'
-              localURL="http://localhost:5000/"
-            />
-          </TabPane>
+          <TabPane tab="FEGraph" key="3"> <Form  localURL="http://localhost:5000/"/></TabPane>
         </Tabs>
-        <div className="form">
-          <Form />
-        </div>
       </div>
     );
   }
