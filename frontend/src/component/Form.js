@@ -27,12 +27,12 @@ class Form extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault()
-		fetch('http://localhost:5000/getprediction', {
+		fetch('http://localhost:5000/getprediction/', {
 			method: "POST",
 			body: JSON.stringify(this.state),
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
 			},
 		}).then(response => {
 				console.log(response.json());
