@@ -7,12 +7,11 @@ Starting backend:
             virtualenv venv
             source venv/bin/activate
             pip3 install -r requirements.txt
-    2. go to backend folder and run backend (must be python3)
-        cd backend/
+    2. run backend (must be python3)
         python backend.py
 
 Starting frontend
     1. install requirements
-        npm install package.json
+        npm install package.json --save
     2. run
         npm start

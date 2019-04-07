@@ -7,7 +7,6 @@ import pandas as pd
 # ### ADD SEABORN PLOT / MATPLOTLIB TO REQUIREMENTS IF WE WANT IT ###
 import seaborn as sns
 import matplotlib.pyplot as plt
-# from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
 from flask import Flask, abort, request, send_file, jsonify
 from flask_restplus import Resource, Api, reqparse, fields
@@ -149,26 +148,22 @@ class postprediction(Resource):
                     else:
                         abort(400, 'modeltype must be in [knn,dnn,logreg]')
         pred_values = pd.DataFrame.from_dict({field:[jsonreq[field]] for field in jsonreq if field != "modeltype"})
-        print(pred_values)
         pred_values = prediction_clean_data(pred_values,df_norm)
 
-        print(pred_values)
-        """
         if modeltype:
             if modeltype == "knn":
-                return knn(df_model),200
+                return knn(df_model,pred_values),200
             elif modeltype == "dnn":
-                return dnn(df_model),200
+                return dnn(df_model,pred_values),200
             elif modeltype == "logreg":
-                return logreg(df_model),200
+                return logreg(df_model,pred_values),200
 
         return {
-            "knn" : knn(df_model),
-            "dnn" : dnn(df_model),
-            "logreg" : logreg(df_model),
+            "knn" : knn(df_model,pred_values),
+            "dnn" : dnn(df_model,pred_values),
+            "logreg" : logreg(df_model,pred_values),
         }, 200
-        """
-        return "ok",200
+
 if __name__ == '__main__':
     
     df = pd.read_csv("./data/analytics.csv")

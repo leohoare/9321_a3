@@ -31,7 +31,7 @@ def train_random_forest():
 
 
 
-def knn(data):
+def knn(data,X_pred):
     past = time.time()
     X, y = np.split(data, [-1], axis=1)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
@@ -45,10 +45,11 @@ def knn(data):
         "no_incorrect" : int(matrix[0][1]),
         "yes_correct" : int(matrix[1][1]),
         "yes_incorrect" : int(matrix[1][0]),
-        "time": time.time()-past
+        "time": time.time()-past,
+        "prediction" : knn_model.predict(X_pred)[0],
     }
 
-def logreg(data):
+def logreg(data,X_pred):
     past = time.time()
     X, y = np.split(data, [-1], axis=1)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
@@ -62,7 +63,8 @@ def logreg(data):
         "no_incorrect" : int(matrix[0][1]),
         "yes_correct" : int(matrix[1][1]),
         "yes_incorrect" : int(matrix[1][0]),
-        "time": time.time()-past
+        "time": time.time()-past,
+        "prediction" : lr.predict(X_pred)[0],
     }
 
 def logregcoeff(data):
@@ -75,7 +77,7 @@ def logregcoeff(data):
     data["intercept"] = lr.intercept_[0]
     return data
 
-def dnn(data):
+def dnn(data,X_pred):
     past = time.time()
     X, y = np.split(data, [-1], axis=1)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
@@ -93,6 +95,7 @@ def dnn(data):
         "no_incorrect" : int(matrix[0][1]),
         "yes_correct" : int(matrix[1][1]),
         "yes_incorrect" : int(matrix[1][0]),
-        "time": time.time()-past
+        "time": time.time()-past,
+        "prediction" : int((classifier.predict(X_pred)>0.5)[0][0]),
     }
 
