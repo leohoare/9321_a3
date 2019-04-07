@@ -1,14 +1,12 @@
-import os
-import csv
-import re
-# import StringIO
+import sys
 import base64
 import io
+import json
 import pandas as pd
+
 # ### ADD SEABORN PLOT / MATPLOTLIB TO REQUIREMENTS IF WE WANT IT ###
 import seaborn as sns
 import matplotlib.pyplot as plt
-# from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
 from flask import Flask, abort, request, send_file, jsonify
 from flask_restplus import Resource, Api, reqparse, fields
@@ -16,59 +14,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
 
-# def create_db(db_file):
-#     ''' Create db file in working directory '''
-#     global db, Entry
-#     basedir = os.path.abspath(os.path.dirname(__file__))
-#     app.config['SQLALCHEMY_DATABASE_URI'] =  'sqlite:///' + os.path.join(basedir,'../data/', db_file)
-#     db = SQLAlchemy(app)
-
-#     # age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal,target
-#     # nullable for now
-#     class Entry(db.Model):
-#         id = db.Column(db.Integer, primary_key=True)
-#         age = db.Column(db.Integer, nullable=False)
-#         sex = db.Column(db.Boolean, nullable=False)
-#         cp = db.Column(db.Integer, nullable=False)       
-#         restbp = db.Column(db.Integer, nullable=False)
-#         chol = db.Column(db.Integer, nullable=False)
-#         fbs = db.Column(db.Boolean, nullable=False)
-#         restecg = db.Column(db.Integer, nullable=False)
-#         maxhr = db.Column(db.Integer, nullable=False)
-#         exang = db.Column(db.Boolean, nullable=False)
-#         oldpeak = db.Column(db.Float(4,4), nullable=False)
-#         slope = db.Column(db.Integer, nullable=False)
-#         numves = db.Column(db.Integer, nullable=False)
-#         thal = db.Column (db.Integer, nullable=False)
-#         # target = db.Column (db.Integer, nullable=True)
-
-#     db.create_all()
-#     return db
-
-# def populate_db(file_path):
-#     global db, Entry
-#     with open(file_path) as csv_file:
-#         csv_reader = csv.reader(csv_file, delimiter=',')
-#         for row in csv_reader:
-#             try:
-#                 db.session.add(Entry(\
-#                 age = row[0], \
-#                 sex = bool(row[1]), \
-#                 cp = row[2], \
-#                 restbp = row[3], \
-#                 chol = row[4], \
-#                 fbs = bool(row[5]), \
-#                 restecg = row[6], \
-#                 maxhr = row[7], \
-#                 exang = bool(row[8]), \
-#                 oldpeak = row[9], \
-#                 slope = row[10], \
-#                 numves = row[11], \
-#                 thal = row[12], \
-#                     ))
-#             except Exception as ex:
-#                 print(ex) 
-#     db.session.commit()
+from model.train import logregcoeff, logreg, knn, dnn
+from model.model import prediction_clean_data
 
 AxisMapping = {
         1: "Age",
@@ -96,7 +43,7 @@ api = Api(app, title='Backend for 9321 a3', description='', default="Actions",  
 
 
 @api.route('/getdata/<string:agesex>/<int:indicator>')
-class DataAcesss(Resource):
+class getdata(Resource):
     @api.doc(responses={200: 'Success', 400: 'Incorrect input by user'})
     def get(self,agesex,indicator):
         if agesex.lower() == 'sex' or agesex == '1':
@@ -123,7 +70,7 @@ class DataAcesss(Resource):
 
 
 @api.route('/getgraph/<string:agesex>/<int:indicator>')
-class DataAcesss(Resource):
+class getgraph(Resource):
     @api.doc(responses={200: 'Success', 400: 'Incorrect input by user'})
 
     def get(self,agesex,indicator):
@@ -159,8 +106,67 @@ class DataAcesss(Resource):
         img.seek(0)
         return {"bytearray" : base64.b64encode(img.getvalue()).decode()},200
 
+@api.route('/getcoefficients/')
+class getcoefficients(Resource):
+    @api.doc(responses={200: 'Success'})
+    def get(self):
+        return logregcoeff(df_model)
+
+@api.route('/getprediction/')
+class postprediction(Resource):
+    @api.doc(body=api.model("payload", {
+        "modeltype":fields.String(description="modeltype",required=False),
+        "age":fields.Integer(description="age",required=True),
+        "sex":fields.Boolean(description="sex",required=True),
+        "cp":fields.Integer(description="cp",required=True),
+        "trestbps":fields.Integer(description="trestbps",required=True),
+        "chol":fields.Integer(description="chol",required=True),
+        "fbs":fields.Integer(description="fbs",required=True),
+        "restecg":fields.Integer(description="restecg",required=True),
+        "thalach":fields.Integer(description="thalach",required=True),
+        "exang":fields.Boolean(description="exang",required=True),
+        "oldpeak":fields.Float(description="oldpeak",required=True),
+        "slope":fields.Integer(description="slope",required=True),
+        "ca":fields.Integer(description="ca",required=True),
+        "thal":fields.Integer(description="thal",required=True),
+        }),\
+    responses={200: 'Success', 400: 'Incorrect input by user'})
+    def post(self):
+        jsonreq = request.get_json()
+        modeltype = ""
+        for field in jsonreq:
+            if field not in ["modeltype", "thal"]:
+                if jsonreq[f"{field}"] < df[f"{field}"].min() or jsonreq[f"{field}"] > df[f"{field}"].max():
+                    abort(400, f'{field} must be between { df[f"{field}"].min()} and {df[f"{field}"].max()}')
+            if field == "thal":
+                if jsonreq[f'{field}'] not in [3,6,7]:
+                    abort(400, f'thal must be between either 3, 6 or 7')
+            if field == "modeltype":
+                if jsonreq["modeltype"] is not None:
+                    if jsonreq["modeltype"].lower() in ["knn","dnn","logreg",""]:
+                        modeltype=jsonreq["modeltype"].lower()
+                    else:
+                        abort(400, 'modeltype must be in [knn,dnn,logreg]')
+        pred_values = pd.DataFrame.from_dict({field:[jsonreq[field]] for field in jsonreq if field != "modeltype"})
+        pred_values = prediction_clean_data(pred_values,df_norm)
+
+        if modeltype:
+            if modeltype == "knn":
+                return knn(df_model,pred_values),200
+            elif modeltype == "dnn":
+                return dnn(df_model,pred_values),200
+            elif modeltype == "logreg":
+                return logreg(df_model,pred_values),200
+
+        return {
+            "knn" : knn(df_model,pred_values),
+            "dnn" : dnn(df_model,pred_values),
+            "logreg" : logreg(df_model,pred_values),
+        }, 200
+
 if __name__ == '__main__':
-    # create_db('data.db')
-    # populate_db('../data/processed.cleveland.data')
-    df = pd.read_csv("./../data/analytics.csv")
+    
+    df = pd.read_csv("./data/analytics.csv")
+    df_model = pd.read_csv("./data/model.csv")
+    df_norm = pd.read_csv("./data/normalised.csv")
     app.run(debug=True)
