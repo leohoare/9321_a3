@@ -1,5 +1,4 @@
 import pandas as pd
-import os
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 
@@ -107,11 +106,11 @@ def prediction_clean_data(analytics, normalised_data):
     return predict_final_data
 
 
-if __name__ == "__main__":
-    data = os.path.join(os.path.split(os.getcwd())[0],"data/processed.cleveland.data")
-    heart = os.path.join(os.path.split(os.getcwd())[0], "data/heart.csv")
-    clean_data = clean_analytics(data,heart)
-    clean_model(clean_data)
+# if __name__ == "__main__":
+#     data = "./data/processed.cleveland.data"
+#     heart = "./data/heart.csv"
+#     clean_data = clean_analytics(data,heart)
+#     clean_model(clean_data)
 
 
 

@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <div className="App">
         <Tabs defaultActiveKey="1">
-          <TabPane tab="lines" key="1"><LineGraph/></TabPane>
+          <TabPane tab="lines" key="1"><LineGraph localURL="http://localhost:5000/"/></TabPane>
           <TabPane tab="Factors" key="2"><Factors localURL="http://localhost:5000/"/></TabPane>
           <TabPane tab="FEGraph" key="3">
             <GenericGraph
