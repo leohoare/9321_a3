@@ -29,6 +29,26 @@ class Prediction extends Component {
 		this.setState({ [ option.props.title] : value });
 	}
 
+	setAge = (value) =>{
+		this.setState({age:value});
+	}
+
+	setTrestbps = (value)=>{
+		this.setState({trestbps:value});
+	}
+
+	setChol = (value)=>{
+		this.setState({chol:value});
+	}
+
+	setThalach = (value)=>{
+		this.setState({thalach:value});
+	}
+
+	setOldpeak = (value)=>{
+		this.setState({oldpeak:value});
+	}
+
 	handleSubmit = (e) => {
 		e.preventDefault()
 		fetch('http://localhost:5000/getprediction/', {
@@ -60,6 +80,9 @@ class Prediction extends Component {
 		// const { modeltype, age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal } = this.state;
 		return (
 			<Form {...formItemLayout} onSubmit={this.handleSubmit}>
+				<Form.Item label="age">
+					<InputNumber min={29} max={77} onChange={this.setAge} />
+				</Form.Item>
 				<Form.Item label="sex">
 					<Select onSelect={this.handleSelect}>
 						<Option title="sex" value="1">male</Option>
@@ -74,6 +97,12 @@ class Prediction extends Component {
 						<Option title="cp" value="4">asymptomatic</Option>
 					</Select>
 				</Form.Item>
+				<Form.Item label="trestbps">
+					<InputNumber min={94} max={200} onChange={this.setTrestbps} />
+				</Form.Item>
+				<Form.Item label="chol">
+					<InputNumber min={126} max={564} onChange={this.setChol} />
+				</Form.Item>
 				<Form.Item label="fasting blood pressure > 120 mg/dl">
 					<Select onSelect={this.handleSelect}>
 						<Option title="fbs" value="1">yes</Option>
@@ -87,11 +116,17 @@ class Prediction extends Component {
 						<Option title="restecg" value="2">showing probable or definite left ventricular hypertrophy</Option>
 					</Select>
 				</Form.Item>
+				<Form.Item label="thalach">
+					<InputNumber min={71} max={202} onChange={this.setThalach} />
+				</Form.Item>
 				<Form.Item label="exercise induced angina">
 					<Select onSelect={this.handleSelect}>
 						<Option title="exang" value="1">yes</Option>
 						<Option title="exang" value="0">no</Option>
 					</Select>
+				</Form.Item>
+				<Form.Item label="oldpeak">
+					<InputNumber min={0} max={6} onChange={this.setOldpeak} />
 				</Form.Item>
 				<Form.Item label=" slope of the peak exercise ST segment">
 					<Select onSelect={this.handleSelect}>
