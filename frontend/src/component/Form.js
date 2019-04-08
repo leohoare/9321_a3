@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import {Form, Select, Button} from 'antd'
 
-class Form extends Component {
+const Option = Select.Option
+
+class Prediction extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -21,11 +24,12 @@ class Form extends Component {
 		};
 	}
 
-	onChange = (e) => {
-		this.setState({ [e.target.name]: e.target.value });
+	handleSelect = (value,option) => {
+		// const attr = option.props.title;
+		this.setState({ [ option.props.title] : value });
 	}
 
-	onSubmit = (e) => {
+	handleSubmit = (e) => {
 		e.preventDefault()
 		fetch('http://localhost:5000/getprediction/', {
 			method: "POST",
@@ -49,100 +53,76 @@ class Form extends Component {
 
 
 	render() {
-		const { modeltype, age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal } = this.state;
+		const formItemLayout = {
+			labelCol: { span: 6 },
+			wrapperCol: { span: 14 },
+		  };
+		// const { modeltype, age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal } = this.state;
 		return (
-			<form onSubmit={this.onSubmit}>
-				<label>modeltype</label>
-				<input
-					type="text"
-					name="modeltype"
-					value={modeltype}
-					onChange={this.onChange} />
-				<label>Age (integer)</label>
-				<input
-					type="text"
-					name="age"
-					value={age}
-					onChange={this.onChange} />
-				<label>sex (1 = male; 0 = female)</label>
-				<input
-					type="text"
-					name="sex"
-					value={sex}
-					onChange={this.onChange} />
-				<label> chest pain type (1=typical angin,2=atypical angina,3=non-anginal pain,4=asymptomatic)</label>
-				<input
-					type="text"
-					name="cp"
-					value={cp}
-					onChange={this.onChange} />
-				<label>resting blood pressure</label>
-				<input
-					type="text"
-					name="trestbps"
-					value={trestbps}
-					onChange={this.onChange} />
-				<label> serum cholestoral in mg/dl</label>
-				<input
-					type="text"
-					name="chol"
-					value={chol}
-					onChange={this.onChange} />
-				<label> fasting blood sugar > 120 mg/dl</label>
-				<input
-					type="text"
-					name="fbs"
-					value={fbs}
-					onChange={this.onChange} />
-				<label>resting electrocardiographic (0:normal, 1:ST-T wave abnormality, 2:left ventricular hypertrophy)</label>
-				<input
-					type="text"
-					name="restecg"
-					value={restecg}
-					onChange={this.onChange} />
-				<label>maximum heart rate achieved</label>
-				<input
-					type="text"
-					name="thalach"
-					value={thalach}
-					onChange={this.onChange} />
-				<label>exercise induced angina</label>
-				<input
-					type="text"
-					name="exang"
-					value={exang}
-					onChange={this.onChange} />
-				<label>oldpeak = ST depression induced by exercise relative to rest</label>
-				<input
-					type="text"
-					name="oldpeak"
-					value={oldpeak}
-					onChange={this.onChange} />
-				<label>the slope of the peak exercise ST segment</label>
-				<input
-					type="text"
-					name="slope"
-					value={slope}
-					onChange={this.onChange} />
-				<label>number of major vessels (0-3) colored by flourosopy</label>
-				<input
-					type="text"
-					name="ca"
-					value={ca}
-					onChange={this.onChange} />
-				<label>thal(Thalassemia): 3 = normal; 6 = fixed defect; 7 = reversable defect</label>
-				<input
-					type="text"
-					name="thal"
-					value={thal}
-					onChange={this.onChange} />
-				<br />
-				<button type="submit">
-					Submit
-				</button>
-			</form>
+			<Form {...formItemLayout} onSubmit={this.handleSubmit}>
+				<Form.Item label="sex">
+					<Select onSelect={this.handleSelect}>
+						<Option title="sex" value="1">male</Option>
+						<Option title="sex" value="0">female</Option>
+					</Select>
+				</Form.Item>
+				<Form.Item label="chest pain type">
+					<Select onSelect={this.handleSelect} style={{ width: 300 }}>
+						<Option title="cp" value="1">typical angin</Option>
+						<Option title="cp" value="2">atypical angina</Option>
+						<Option title="cp" value="3">non-anginal pain</Option>
+						<Option title="cp" value="4">asymptomatic</Option>
+					</Select>
+				</Form.Item>
+				<Form.Item label="fasting blood pressure > 120 mg/dl">
+					<Select onSelect={this.handleSelect}>
+						<Option title="fbs" value="1">yes</Option>
+						<Option title="fbs" value="0">no</Option>
+					</Select>
+				</Form.Item>
+				<Form.Item label="resting electrocardiographic results">
+					<Select onSelect={this.handleSelect} style={{ width: 600 }}>
+						<Option title="restecg" value="0">normal</Option>
+						<Option title="restecg" value="1">having ST-T wave abnormality</Option>
+						<Option title="restecg" value="2">showing probable or definite left ventricular hypertrophy</Option>
+					</Select>
+				</Form.Item>
+				<Form.Item label="exercise induced angina">
+					<Select onSelect={this.handleSelect}>
+						<Option title="exang" value="1">yes</Option>
+						<Option title="exang" value="0">no</Option>
+					</Select>
+				</Form.Item>
+				<Form.Item label=" slope of the peak exercise ST segment">
+					<Select onSelect={this.handleSelect}>
+						<Option title="slope" value="1">1</Option>
+						<Option title="slope" value="2">2</Option>
+						<Option title="slope" value="3">3</Option>
+					</Select>
+				</Form.Item>
+				<Form.Item label="number of major vessels colored by flourosopy">
+					<Select onSelect={this.handleSelect}>
+						<Option title="ca" value="0">0</Option>
+						<Option title="ca" value="1">1</Option>
+						<Option title="ca" value="2">2</Option>
+						<Option title="ca" value="3">3</Option>
+					</Select>
+				</Form.Item>
+				<Form.Item label="Thalassemia">
+					<Select onSelect={this.handleSelect} style={{ width: 300 }}>
+						<Option title="thal" value="3">normal</Option>
+						<Option title="thal" value="6">fixed defect</Option>
+						<Option title="thal" value="7">reversable defect</Option>
+					</Select>
+				</Form.Item>
+				<Form.Item
+				wrapperCol={{ span: 12, offset: 6 }}
+				>
+					<Button type="primary" htmlType="submit">Submit</Button>
+				</Form.Item>
+			</Form>
 		);
 	}
 }
 
-export default Form
+export default Prediction

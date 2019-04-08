@@ -33,32 +33,33 @@ class LineGraph extends Component {
     }
 
     render() {
-      const{agesex, indicator} = this.state;
       // const agesex = age.toString() + sex.toString();
       return (
         <div>            
           <Form onSubmit={this.handleSubmit}>
               <Header>
-              <Select defaultValue="Age" placeholder="agesex" style={{ width: 120 }} onChange={this.selectAgeSex}>
-                <Option value="1">Age</Option>
-                <Option value="2">Sex</Option>
-              </Select>
-              <Select style="width:50%;" defaultValue="chest pain type" placeholder="indicator" style={{ width: 120 }} onChange={this.selectIndicator}>
-                <Option value="3">chest pain type</Option>
-                <Option value="4">resting blood pressure</Option>
-                <Option value="5">serum cholestoral</Option>
-                <Option value="6">fasting blood sugar</Option>
-                <Option value="7">resting electrocardiographic </Option>
-                <Option value="8">maximum heart rate achieved</Option>
-                <Option value="9">exercise induced angina</Option>
-                <Option value="10">oldpeak</Option>
-                <Option value="11">slope of the peak exercise ST segment</Option>
-                <Option value="12">number of major vessels</Option>
-                <Option value="13">Thalassemia</Option>
-              </Select>
-              <Button type="primary" htmlType="submit">Get graph</Button>
+                <Select defaultValue="Age" placeholder="agesex" style={{ width: 120 }} onChange={this.selectAgeSex}>
+                  <Option value="1">Age</Option>
+                  <Option value="2">Sex</Option>
+                </Select>
+                <Select defaultValue="chest pain type" placeholder="indicator" style={{ width: 300 }} onChange={this.selectIndicator}>
+                  <Option value="3">chest pain type</Option>
+                  <Option value="4">resting blood pressure</Option>
+                  <Option value="5">serum cholestoral</Option>
+                  <Option value="6">fasting blood sugar</Option>
+                  <Option value="7">resting electrocardiographic </Option>
+                  <Option value="8">maximum heart rate achieved</Option>
+                  <Option value="9">exercise induced angina</Option>
+                  <Option value="10">oldpeak</Option>
+                  <Option value="11">slope of the peak exercise ST segment</Option>
+                  <Option value="12">number of major vessels</Option>
+                  <Option value="13">Thalassemia</Option>
+                </Select>
+                <Button type="primary" htmlType="submit">Get graph</Button>
               </Header>
-              <img src={"data:image/png;base64," + this.state.grapharray} hidden={this.state.hidden}/>
+              <Content>
+                <img alt="line graph"src={"data:image/png;base64," + this.state.grapharray} hidden={this.state.hidden}/>
+              </Content>
           </Form>
         </div>
       );
