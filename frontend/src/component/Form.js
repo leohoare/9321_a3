@@ -27,7 +27,6 @@ class Prediction extends Component {
 			thal: '',
 			result: [],
 			visible:true,
-			resultVis:'block'
 		};
 	}
 
@@ -81,9 +80,6 @@ class Prediction extends Component {
 		}).then(data=>{
 			this.setState({result:data});
 		})
-		.then(
-			this.setState({resultVis:'none'})
-		)
 		.catch(e => console.log(e));
 	}
 	  
@@ -190,7 +186,7 @@ class Prediction extends Component {
 
 				width={500}
 				>
-				<img src={require("./../images/loader.gif")}  style={{
+				<img src={require("./../images/loader.gif")}  alt="loader" style={{
 					margin: 'auto',
 					display : this.state.result.length > 0 ? 'none' : 'block'
 				}}/>
