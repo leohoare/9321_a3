@@ -40,11 +40,8 @@ def knn(data,X_pred):
     y_pred=knn_model.predict(X_test)
     matrix=confusion_matrix(y_test, y_pred)
     return {
+        "model": "KNN",
         "accuracy": float((matrix[0][0]+matrix[1][1])/(sum(matrix[0])+sum(matrix[1]))),
-        "no_correct" : int(matrix[0][0]),
-        "no_incorrect" : int(matrix[0][1]),
-        "yes_correct" : int(matrix[1][1]),
-        "yes_incorrect" : int(matrix[1][0]),
         "time": time.time()-past,
         "prediction" : knn_model.predict(X_pred)[0],
     }
@@ -58,11 +55,8 @@ def logreg(data,X_pred):
     y_pred=lr.predict(X_test)
     matrix=confusion_matrix(y_test, y_pred)
     return {
+        "model": "Logistic Regression",
         "accuracy": float((matrix[0][0]+matrix[1][1])/(sum(matrix[0])+sum(matrix[1]))),
-        "no_correct" : int(matrix[0][0]),
-        "no_incorrect" : int(matrix[0][1]),
-        "yes_correct" : int(matrix[1][1]),
-        "yes_incorrect" : int(matrix[1][0]),
         "time": time.time()-past,
         "prediction" : lr.predict(X_pred)[0],
     }
@@ -90,11 +84,8 @@ def dnn(data,X_pred):
     y_pred=(classifier.predict(X_test) > 0.5)
     matrix=confusion_matrix(y_test, y_pred)
     return {
+        "model": "Deep Neural Network",
         "accuracy": float((matrix[0][0]+matrix[1][1])/(sum(matrix[0])+sum(matrix[1]))),
-        "no_correct" : int(matrix[0][0]),
-        "no_incorrect" : int(matrix[0][1]),
-        "yes_correct" : int(matrix[1][1]),
-        "yes_incorrect" : int(matrix[1][0]),
         "time": time.time()-past,
         "prediction" : int((classifier.predict(X_pred)>0.5)[0][0]),
     }

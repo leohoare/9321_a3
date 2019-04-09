@@ -71,28 +71,21 @@ class Prediction extends Component {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 			},})
-		.then(function(response) {
-			if (!response.status.ok) {
-				const error = new Error(response.body);
-				error.response = response;
-				throw error;
-			}})
 		.then(results => {
 			return results.json()
 		}).then(data=>{
-			this.setState({result:data})
+			this.setState({result:data});
 		})
-		// .catch(err => {test = err.json(); console.log(test)});
+		.catch(e => console.log(e));
 	}
-
-
 
 	render() {
 		const formItemLayout = {
 			labelCol: { span: 6 },
 			wrapperCol: { span: 14 },
-		  };
-		const { result } = this.state;
+		};
+
+		// const { result } = this.state;
 		return (
 			<div>
 				<Form {...formItemLayout} onSubmit={this.handleSubmit}>
@@ -169,30 +162,31 @@ class Prediction extends Component {
 					<Form.Item
 					wrapperCol={{ span: 12, offset: 6 }}
 					>
-						<Button type="primary" htmlType="submit" onClick={this.showResult}>Submit</Button>
+					<Button type="primary" htmlType="submit" onClick={this.showResult}>Submit</Button>
 					</Form.Item>
-				</Form>
+				</Form>		
 				<Drawer
-					title="Result"
-					placement="right"
-					onClose={this.closeResult}
-					visible={this.state.visible}
-					width={500}
+				title="Result"
+				placement="right"
+				onClose={this.closeResult}
+				visible={this.state.visible}
+
+				width={500}
 				>
-					<List
-						itemLayout="horizontal"
-						dataSource={result}
-						renderItem={item => (
-						<List.Item>
-							<List.Item.Meta
-							title={item.model}
-							/>
-							time : {item.time}<br/>
-							accuracy : {item.accuracy}<br/>
-							prediction : {(item.prediction===0)?'no':'yes'}<br/>
-						</List.Item>
-						)}
-					/>
+				<List
+					itemLayout="horizontal"
+					dataSource={this.state.result}
+					renderItem={item => (
+					<List.Item>
+						<List.Item.Meta
+						title={item.model}
+						/>
+						time : {item.time}<br/>
+						accuracy : {item.accuracy}<br/>
+						prediction : {(item.prediction===0)?'No Heart Disease':'Heart Disease! :('}<br/>
+					</List.Item>
+					)}
+				/>
 				</Drawer>
 		  	</div>
 		);
