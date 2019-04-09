@@ -22,7 +22,7 @@ class Prediction extends Component {
 			ca: '',
 			thal: '',
 			result:{},
-			visible:false
+			visible:true
 		};
 	}
 
