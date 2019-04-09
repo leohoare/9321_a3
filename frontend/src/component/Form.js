@@ -3,6 +3,10 @@ import {Form, Select, Button, Drawer,List,InputNumber} from 'antd'
 
 const Option = Select.Option
 
+function hasErrors(fieldsError) {
+	return Object.keys(fieldsError).some(field => fieldsError[field]);
+}
+
 class Prediction extends Component {
 	constructor() {
 		super();
@@ -82,12 +86,14 @@ class Prediction extends Component {
 		)
 		.catch(e => console.log(e));
 	}
+	  
 
 	render() {
 		const formItemLayout = {
 			labelCol: { span: 6 },
 			wrapperCol: { span: 14 },
 		};
+		const {getFieldsError} = this.props.form;
 
 		// const { result } = this.state;
 		return (
@@ -166,7 +172,14 @@ class Prediction extends Component {
 					<Form.Item
 					wrapperCol={{ span: 12, offset: 6 }}
 					>
-					<Button type="primary" htmlType="submit" onClick={this.showResult}>Submit</Button>
+						<Button 
+							type="primary" 
+							htmlType="submit" 
+							onClick={this.showResult}
+							disabled={hasErrors(getFieldsError())}
+						>
+								Submit
+						</Button>
 					</Form.Item>
 				</Form>		
 				<Drawer
