@@ -167,9 +167,9 @@ class Prediction extends Component {
 					<Form.Item
 					wrapperCol={{ span: 12, offset: 6 }}
 					>
-					<Button type="primary" htmlType="submit" onChange={this.showResult}>Submit</Button>
+					<Button type="primary" htmlType="submit" onClick={this.showResult}>Submit</Button>
 					</Form.Item>
-				</Form>
+				</Form>		
 				<Drawer
 				title="Result"
 				placement="right"
