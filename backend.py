@@ -158,11 +158,7 @@ class postprediction(Resource):
             elif modeltype == "logreg":
                 return logreg(df_model,pred_values),200
 
-        return {
-            "knn" : knn(df_model,pred_values),
-            "dnn" : dnn(df_model,pred_values),
-            "logreg" : logreg(df_model,pred_values),
-        }, 200
+        return [knn(df_model,pred_values),dnn(df_model,pred_values),logreg(df_model,pred_values)],200
 
 if __name__ == '__main__':
     

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Form, Select, Button} from 'antd'
+import {Form, Select, Button, InputNumber} from 'antd'
 
 const Option = Select.Option
 
@@ -153,7 +153,7 @@ class Prediction extends Component {
 				<Form.Item
 				wrapperCol={{ span: 12, offset: 6 }}
 				>
-					<Button type="primary" htmlType="submit">Submit</Button>
+				<Button type="primary" htmlType="submit">Submit</Button>
 				</Form.Item>
 			</Form>
 		);
