@@ -21,13 +21,8 @@ class Prediction extends Component {
 			slope: '',
 			ca: '',
 			thal: '',
-			result:[ {
-				accuracy: 0.75,
-				model: "KNN",
-				prediction: 0,
-				time: 0.016627788543701172,
-			}			],
-			visible:true
+			result: [],
+			visible:false
 		};
 	}
 
