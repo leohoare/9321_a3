@@ -25,8 +25,8 @@ class Prediction extends Component {
 			slope: '',
 			ca: '',
 			thal: '',
-			result:{},
-			visible:true
+			result: [],
+			visible:false
 		};
 	}
 
