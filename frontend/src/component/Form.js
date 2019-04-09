@@ -22,7 +22,8 @@ class Prediction extends Component {
 			ca: '',
 			thal: '',
 			result: [],
-			visible:false
+			visible:true,
+			resultVis:'block'
 		};
 	}
 
@@ -76,6 +77,9 @@ class Prediction extends Component {
 		}).then(data=>{
 			this.setState({result:data});
 		})
+		.then(
+			this.setState({resultVis:'none'})
+		)
 		.catch(e => console.log(e));
 	}
 
@@ -173,6 +177,13 @@ class Prediction extends Component {
 
 				width={500}
 				>
+				<img src={require("./../images/loader.gif")}  style={{
+					margin: 'auto',
+					display : this.state.result.length > 0 ? 'none' : 'block'
+				}}/>
+				<p style = {{ visibility:this.state.result.length > 0 ? 'visible' : 'hidden'}}>
+					Accuracy is based on training 80% of the data and testing on 20%
+				</p>
 				<List
 					itemLayout="horizontal"
 					dataSource={this.state.result}
