@@ -17,13 +17,13 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import export_graphviz
 
 # WHEN RUNNING MODEL
-from model import clean_model
-from model import meanAndSd
-from model import prediction_clean_data
-# WHEN RUNNING BE
 #from model import clean_model
 #from model import meanAndSd
 #from model import prediction_clean_data
+# WHEN RUNNING BE
+from model.model import clean_model
+from model.model import meanAndSd
+from model.model import prediction_clean_data
 
 import matplotlib.pyplot as plt
 import json
