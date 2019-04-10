@@ -26,6 +26,7 @@ from model import prediction_clean_data
 #from model import prediction_clean_data
 
 import matplotlib.pyplot as plt
+import json
 
 
 """
@@ -43,8 +44,28 @@ def graph_random_forest(data):
     names = [X.columns[i] for i in indices]
     top_10_names = names[:10]
     top_10_features = feat_importance[indices][:10]
-    dictionary_top_10_list = dict(zip(top_10_names, top_10_features))
 
+    a = list()
+
+    dicc = {}
+
+    """
+    t = ((1, 'a'),(2, 'b'))
+    >>> dict((y, x) for x, y in t)
+    {'a': 1, 'b': 2}
+    
+    """
+    a = list()
+    for i in range(len(top_10_names)):
+        #b["x"]= top_10_names[i]
+        #d["y"]= top_10_features[i]
+        b = ("x",top_10_names[i])
+        d = ("y", top_10_features[i])
+        t = (b ,d)
+        dicc = dict((x,y) for x,y in t)
+        a.append(dicc)
+
+    return json.dumps(a)
     """
     To print in matlob values 
     """
@@ -54,6 +75,7 @@ def graph_random_forest(data):
     #plt.show()
 
     dictionary = dict(zip(names, feat_importance[indices]))
+
 
     dict_columns = {}
     for k,v in dictionary.items():

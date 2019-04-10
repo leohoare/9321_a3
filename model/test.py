@@ -1,6 +1,7 @@
 from model import prediction_clean_data
 from train import knn
 from train import train_random_forest
+from train import graph_random_forest
 import pandas as pd
 
 
@@ -23,8 +24,8 @@ def run_test():
 
     random = train_random_forest(df_model,analytics)
 
-    print(random)
-    print(y_predict)
+
+    print(graph_random_forest(df_model))
 
 
 

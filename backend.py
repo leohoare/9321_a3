@@ -4,6 +4,7 @@ import io
 import json
 import pandas as pd
 
+
 # ### ADD SEABORN PLOT / MATPLOTLIB TO REQUIREMENTS IF WE WANT IT ###
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -16,6 +17,7 @@ from flask_cors import CORS
 
 from model.train import logregcoeff, logreg, knn, dnn
 from model.model import prediction_clean_data
+from model.train import train_random_forest, graph_random_forest
 
 AxisMapping = {
         1: "Age",
@@ -112,6 +114,11 @@ class getcoefficients(Resource):
     def get(self):
         return logregcoeff(df_model)
 
+@api.route('/getfactors/')
+class getFactors(Resource):
+    @api.doc(response={200,'Success'})
+    def get(self):
+        return graph_random_forest(df_model)
 @api.route('/getprediction/')
 class postprediction(Resource):
     @api.doc(body=api.model("payload", {
@@ -157,8 +164,14 @@ class postprediction(Resource):
                 return dnn(df_model,pred_values),200
             elif modeltype == "logreg":
                 return logreg(df_model,pred_values),200
+            elif modeltype == "randomforest":
+                return train_random_forest(df_model,pred_values),200
 
-        return [knn(df_model,pred_values),dnn(df_model,pred_values),logreg(df_model,pred_values)],200
+        return [knn(df_model,pred_values),
+                dnn(df_model,pred_values),
+                logreg(df_model,pred_values),
+                train_random_forest(df_model,pred_values)]\
+            ,200
 
 if __name__ == '__main__':
     
