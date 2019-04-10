@@ -26,7 +26,7 @@ from model.model import meanAndSd
 from model.model import prediction_clean_data
 
 import matplotlib.pyplot as plt
-import json
+
 
 
 """
@@ -45,9 +45,9 @@ def graph_random_forest(data):
     top_10_names = names[:10]
     top_10_features = feat_importance[indices][:10]
 
-    a = list()
 
-    dicc = {}
+
+
 
     """
     t = ((1, 'a'),(2, 'b'))
@@ -55,6 +55,7 @@ def graph_random_forest(data):
     {'a': 1, 'b': 2}
     
     """
+    dicc = {}
     a = list()
     for i in range(len(top_10_names)):
         #b["x"]= top_10_names[i]
@@ -65,7 +66,7 @@ def graph_random_forest(data):
         dicc = dict((x,y) for x,y in t)
         a.append(dicc)
 
-    return json.dumps(a)
+    return a
     """
     To print in matlob values 
     """
