@@ -3,9 +3,6 @@ import {Form, Select, Button, Drawer,List,InputNumber} from 'antd'
 
 const Option = Select.Option
 
-function hasErrors(fieldsError) {
-	return Object.keys(fieldsError).some(field => fieldsError[field]);
-}
 
 class Prediction extends Component {
 	constructor() {
@@ -83,29 +80,40 @@ class Prediction extends Component {
 		.catch(e => console.log(e));
 	}
 	  
+	allFilled(){
+		const obj = (({age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal }) => ({ 
+			age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal 
+		}))(this.state);
+
+		for (var key in obj){
+			if (obj[key] !== ''){
+				return false;
+			}
+		}
+		return true;
+	}
 
 	render() {
 		const formItemLayout = {
 			labelCol: { span: 6 },
 			wrapperCol: { span: 14 },
 		};
-		const {getFieldsError} = this.props.form;
 
-		// const { result } = this.state;
+		const { modeltype, age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal } = this.state;
 		return (
 			<div>
 				<Form {...formItemLayout} onSubmit={this.handleSubmit}>
 					<Form.Item label="age">
-						<InputNumber min={29} max={77} onChange={this.setAge} />
+						<InputNumber defaultValue={age} min={29} max={77} onChange={this.setAge} />
 					</Form.Item>
 					<Form.Item label="sex">
-						<Select onSelect={this.handleSelect}>
+						<Select defaultValue={sex} onSelect={this.handleSelect}>
 							<Option title="sex" value="1">male</Option>
 							<Option title="sex" value="0">female</Option>
 						</Select>
 					</Form.Item>
 					<Form.Item label="chest pain type">
-						<Select onSelect={this.handleSelect} style={{ width: 300 }}>
+						<Select defaultValue={cp} onSelect={this.handleSelect} style={{ width: 300 }}>
 							<Option title="cp" value="1">typical angin</Option>
 							<Option title="cp" value="2">atypical angina</Option>
 							<Option title="cp" value="3">non-anginal pain</Option>
@@ -113,45 +121,45 @@ class Prediction extends Component {
 						</Select>
 					</Form.Item>
 					<Form.Item label="trestbps">
-						<InputNumber min={94} max={200} onChange={this.setTrestbps} />
+						<InputNumber defaultValue={trestbps} min={94} max={200} onChange={this.setTrestbps} />
 					</Form.Item>
 					<Form.Item label="chol">
-						<InputNumber min={126} max={564} onChange={this.setChol} />
+						<InputNumber defaultValue={chol} min={126} max={564} onChange={this.setChol} />
 					</Form.Item>
 					<Form.Item label="fasting blood pressure > 120 mg/dl">
-						<Select onSelect={this.handleSelect}>
+						<Select defaultValue={fbs} onSelect={this.handleSelect}>
 							<Option title="fbs" value="1">yes</Option>
 							<Option title="fbs" value="0">no</Option>
 						</Select>
 					</Form.Item>
 					<Form.Item label="resting electrocardiographic results">
-						<Select onSelect={this.handleSelect} style={{ width: 600 }}>
+						<Select defaultValue={restecg} onSelect={this.handleSelect} style={{ width: 600 }}>
 							<Option title="restecg" value="0">normal</Option>
 							<Option title="restecg" value="1">having ST-T wave abnormality</Option>
 							<Option title="restecg" value="2">showing probable or definite left ventricular hypertrophy</Option>
 						</Select>
 					</Form.Item>
 					<Form.Item label="thalach">
-						<InputNumber min={71} max={202} onChange={this.setThalach} />
+						<InputNumber defaultValue={thalach} min={71} max={202} onChange={this.setThalach} />
 					</Form.Item>
 					<Form.Item label="exercise induced angina">
-						<Select onSelect={this.handleSelect}>
+						<Select defaultValue={exang} onSelect={this.handleSelect}>
 							<Option title="exang" value="1">yes</Option>
 							<Option title="exang" value="0">no</Option>
 						</Select>
 					</Form.Item>
 					<Form.Item label="oldpeak">
-						<InputNumber min={0} max={6} onChange={this.setOldpeak} />
+						<InputNumber defaultValue={oldpeak} min={0} max={6} onChange={this.setOldpeak} />
 					</Form.Item>
 					<Form.Item label=" slope of the peak exercise ST segment">
-						<Select onSelect={this.handleSelect}>
+						<Select defaultValue={slope} onSelect={this.handleSelect}>
 							<Option title="slope" value="1">1</Option>
 							<Option title="slope" value="2">2</Option>
 							<Option title="slope" value="3">3</Option>
 						</Select>
 					</Form.Item>
 					<Form.Item label="number of major vessels colored by flourosopy">
-						<Select onSelect={this.handleSelect}>
+						<Select defaultValue={ca} onSelect={this.handleSelect}>
 							<Option title="ca" value="0">0</Option>
 							<Option title="ca" value="1">1</Option>
 							<Option title="ca" value="2">2</Option>
@@ -159,7 +167,7 @@ class Prediction extends Component {
 						</Select>
 					</Form.Item>
 					<Form.Item label="Thalassemia">
-						<Select onSelect={this.handleSelect} style={{ width: 300 }}>
+						<Select defaultValue={thal} onSelect={this.handleSelect} style={{ width: 300 }}>
 							<Option title="thal" value="3">normal</Option>
 							<Option title="thal" value="6">fixed defect</Option>
 							<Option title="thal" value="7">reversable defect</Option>
@@ -172,7 +180,7 @@ class Prediction extends Component {
 							type="primary" 
 							htmlType="submit" 
 							onClick={this.showResult}
-							disabled={hasErrors(getFieldsError())}
+							disabled={this.allFilled()}
 						>
 								Submit
 						</Button>
