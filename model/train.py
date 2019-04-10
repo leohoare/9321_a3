@@ -28,18 +28,33 @@ from model import prediction_clean_data
 import matplotlib.pyplot as plt
 
 
-
-def graph_random_forest(X, feat_importance):
+"""
+Graph Random forest generator 
+"""
+def graph_random_forest(data):
+    past = time.time()
+    X, y = np.split(data, [-1], axis=1)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1000)
+    model = RandomForestClassifier(max_depth=110, max_features=3, min_samples_leaf=3,
+                                   min_samples_split=10, n_estimators=100, random_state=0)
+    model.fit(X_train, y_train.values.ravel())
+    feat_importance = model.feature_importances_
     indices = np.argsort(feat_importance)[::-1]
     names = [X.columns[i] for i in indices]
     top_10_names = names[:10]
     top_10_features = feat_importance[indices][:10]
-    plt.bar(range(10), top_10_features)
-    plt.xticks(range(10), top_10_names, fontsize=8)
-    plt.title("Top 10 Important Feature")
+    dictionary_top_10_list = dict(zip(top_10_names, top_10_features))
+
+    """
+    To print in matlob values 
+    """
+    #plt.bar(range(len(10)), top_10_features)
+    #plt.xticks(range(len(10)), top_10_names, fontsize=8)
+    #plt.title("Top 10 Important Feature")
     #plt.show()
+
     dictionary = dict(zip(names, feat_importance[indices]))
-    #compress the values on a dict
+
     dict_columns = {}
     for k,v in dictionary.items():
         if '_' in k:
@@ -58,10 +73,13 @@ def graph_random_forest(X, feat_importance):
     dict_columns= dict(sorted(dict_columns.items(), key=lambda x: x[1],reverse=True))
     x_feature = list(dict_columns.keys())
     x_values = list(dict_columns.values())
-    plt.bar(range(len(x_values)), x_values)
-    plt.xticks(range(len(x_values)), x_feature, fontsize=8)
-    plt.title("Top 10 Important Feature")
-    plt.show()
+    dict_columns = dict(zip(x_feature,x_values))
+
+    """  to print in matlob"""
+    #plt.bar(range(len(x_values)), x_values)
+    #plt.xticks(range(len(x_values)), x_feature, fontsize=8)
+    #plt.title("Top 10 Important Feature")
+    #plt.show()
 
 
 def train_random_forest(data, X_pred):
@@ -74,11 +92,10 @@ def train_random_forest(data, X_pred):
     y_pred=model.predict(X_test)
     matrix=confusion_matrix(y_test, y_pred)
     feat_importance = model.feature_importances_
-    base_accuracy = float((matrix[0][0] + matrix[1][1]) / (sum(matrix[0]) + sum(matrix[1]))),
-
-
+    base_accuracy = float((matrix[0][0] + matrix[1][1]) / (sum(matrix[0]) + sum(matrix[1])))
     #graph_random_forest(X,feat_importance)
 
+    #save model for graph generator
     return {
         "model": "Random Forest",
         "accuracy": base_accuracy,
