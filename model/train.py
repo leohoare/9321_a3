@@ -5,6 +5,7 @@ import time
 from keras.models import Sequential
 from keras.layers import Dense
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
 from sklearn.metrics import confusion_matrix
 
 from sklearn.linear_model import LogisticRegression
@@ -33,7 +34,6 @@ def graph_random_forest(X, feat_importance):
     names = [X.columns[i] for i in indices]
     print(names)
     print(feat_importance)
-
     plt.bar(range(X.shape[1]), feat_importance[indices])
 
     plt.xticks(range(X.shape[1]), names, fontsize=8)
@@ -41,16 +41,13 @@ def graph_random_forest(X, feat_importance):
     plt.show()
 
 
+
 def train_random_forest(data, X_pred):
     past = time.time()
     X, y = np.split(data, [-1], axis=1)
-    seed = 193
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state= seed)
-
-    
-    #use gridsearch 
-    model = RandomForestClassifier(n_estimators=100,random_state=0)
-
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state= 1000)
+    model = RandomForestClassifier(max_depth=110,max_features=3,min_samples_leaf=3,
+                                   min_samples_split=10,n_estimators=100, random_state= 0)
     model.fit(X_train, y_train.values.ravel())
 
     y_pred=model.predict(X_test)
@@ -58,12 +55,13 @@ def train_random_forest(data, X_pred):
     matrix=confusion_matrix(y_test, y_pred)
 
     feat_importance = model.feature_importances_
+    base_accuracy = float((matrix[0][0] + matrix[1][1]) / (sum(matrix[0]) + sum(matrix[1]))),
 
-    #graph_random_forest(X,feat_importance)
+    graph_random_forest(X,feat_importance)
 
     return {
         "model": "Random Forest",
-        "accuracy": float((matrix[0][0] + matrix[1][1]) / (sum(matrix[0]) + sum(matrix[1]))),
+        "accuracy": base_accuracy,
         "time": time.time() - past,
         "prediction": model.predict(X_pred)[0],
     }
