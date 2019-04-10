@@ -26,27 +26,42 @@ from model import prediction_clean_data
 #from model import prediction_clean_data
 
 import matplotlib.pyplot as plt
-import os
+
 
 
 def graph_random_forest(X, feat_importance):
     indices = np.argsort(feat_importance)[::-1]
     names = [X.columns[i] for i in indices]
-    #print(names)
-    #print(feat_importance[indices])
     top_10_names = names[:10]
     top_10_features = feat_importance[indices][:10]
-    #print(top_10_features)
-    #print(top_10_names)
-
-    ##first plot top_10
     plt.bar(range(10), top_10_features)
-
     plt.xticks(range(10), top_10_names, fontsize=8)
     plt.title("Top 10 Important Feature")
     #plt.show()
-    ##joining them together
-    #plt.show()
+    dictionary = dict(zip(names, feat_importance[indices]))
+    #compress the values on a dict
+    dict_columns = {}
+    for k,v in dictionary.items():
+        if '_' in k:
+            a = k.split("_")[0]
+            #check if it is in dict
+            if a in dict_columns:
+                dict_columns[a] = dictionary[k] + dict_columns[a]
+            else:
+                dict_columns[a]= v
+        else:
+            a = k
+            if a in dict_columns:
+                dict_columns[a] = dictionary[k] + dict_columns[a]
+            else:
+                dict_columns[a] = v
+    dict_columns= dict(sorted(dict_columns.items(), key=lambda x: x[1],reverse=True))
+    x_feature = list(dict_columns.keys())
+    x_values = list(dict_columns.values())
+    plt.bar(range(len(x_values)), x_values)
+    plt.xticks(range(len(x_values)), x_feature, fontsize=8)
+    plt.title("Top 10 Important Feature")
+    plt.show()
 
 
 def train_random_forest(data, X_pred):
@@ -62,13 +77,7 @@ def train_random_forest(data, X_pred):
     base_accuracy = float((matrix[0][0] + matrix[1][1]) / (sum(matrix[0]) + sum(matrix[1]))),
 
 
-
-
-
-
-
-
-    graph_random_forest(X,feat_importance)
+    #graph_random_forest(X,feat_importance)
 
     return {
         "model": "Random Forest",
