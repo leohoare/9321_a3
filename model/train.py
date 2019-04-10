@@ -32,14 +32,21 @@ import os
 def graph_random_forest(X, feat_importance):
     indices = np.argsort(feat_importance)[::-1]
     names = [X.columns[i] for i in indices]
-    print(names)
-    print(feat_importance)
-    plt.bar(range(X.shape[1]), feat_importance[indices])
+    #print(names)
+    #print(feat_importance[indices])
+    top_10_names = names[:10]
+    top_10_features = feat_importance[indices][:10]
+    #print(top_10_features)
+    #print(top_10_names)
 
-    plt.xticks(range(X.shape[1]), names, fontsize=8)
-    plt.title("Feature Importance")
-    plt.show()
+    ##first plot top_10
+    plt.bar(range(10), top_10_features)
 
+    plt.xticks(range(10), top_10_names, fontsize=8)
+    plt.title("Top 10 Important Feature")
+    #plt.show()
+    ##joining them together
+    #plt.show()
 
 
 def train_random_forest(data, X_pred):
@@ -49,13 +56,17 @@ def train_random_forest(data, X_pred):
     model = RandomForestClassifier(max_depth=110,max_features=3,min_samples_leaf=3,
                                    min_samples_split=10,n_estimators=100, random_state= 0)
     model.fit(X_train, y_train.values.ravel())
-
     y_pred=model.predict(X_test)
-
     matrix=confusion_matrix(y_test, y_pred)
-
     feat_importance = model.feature_importances_
     base_accuracy = float((matrix[0][0] + matrix[1][1]) / (sum(matrix[0]) + sum(matrix[1]))),
+
+
+
+
+
+
+
 
     graph_random_forest(X,feat_importance)
 
