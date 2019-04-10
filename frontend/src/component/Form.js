@@ -23,7 +23,7 @@ class Prediction extends Component {
 			ca: '',
 			thal: '',
 			result: [],
-			visible:false
+			visible:true,
 		};
 	}
 
@@ -194,6 +194,13 @@ class Prediction extends Component {
 
 				width={500}
 				>
+				<img src={require("./../images/loader.gif")}  alt="loader" style={{
+					margin: 'auto',
+					display : this.state.result.length > 0 ? 'none' : 'block'
+				}}/>
+				<p style = {{ visibility:this.state.result.length > 0 ? 'visible' : 'hidden'}}>
+					Accuracy is based on training 80% of the data and testing on 20%
+				</p>
 				<List
 					itemLayout="horizontal"
 					dataSource={this.state.result}

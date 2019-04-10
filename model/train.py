@@ -5,32 +5,66 @@ import time
 from keras.models import Sequential
 from keras.layers import Dense
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
 from sklearn.metrics import confusion_matrix
 
 from sklearn.linear_model import LogisticRegression
-
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.externals import joblib
-import pickle
+from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+
+from sklearn.tree import export_graphviz
 
 # WHEN RUNNING MODEL
-# from model import clean_model
-# from model import meanAndSd
-# from model import prediction_clean_data
+from model import clean_model
+from model import meanAndSd
+from model import prediction_clean_data
 # WHEN RUNNING BE
-from model.model import clean_model
-from model.model import meanAndSd
-from model.model import prediction_clean_data
+#from model import clean_model
+#from model import meanAndSd
+#from model import prediction_clean_data
+
 import matplotlib.pyplot as plt
+import os
 
 
-def pca():
-    pass
-def train_random_forest():
-    pass
+def graph_random_forest(X, feat_importance):
+    indices = np.argsort(feat_importance)[::-1]
+    names = [X.columns[i] for i in indices]
+    print(names)
+    print(feat_importance)
+    plt.bar(range(X.shape[1]), feat_importance[indices])
+
+    plt.xticks(range(X.shape[1]), names, fontsize=8)
+    plt.title("Feature Importance")
+    plt.show()
 
 
 
+def train_random_forest(data, X_pred):
+    past = time.time()
+    X, y = np.split(data, [-1], axis=1)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state= 1000)
+    model = RandomForestClassifier(max_depth=110,max_features=3,min_samples_leaf=3,
+                                   min_samples_split=10,n_estimators=100, random_state= 0)
+    model.fit(X_train, y_train.values.ravel())
+
+    y_pred=model.predict(X_test)
+
+    matrix=confusion_matrix(y_test, y_pred)
+
+    feat_importance = model.feature_importances_
+    base_accuracy = float((matrix[0][0] + matrix[1][1]) / (sum(matrix[0]) + sum(matrix[1]))),
+
+    graph_random_forest(X,feat_importance)
+
+    return {
+        "model": "Random Forest",
+        "accuracy": base_accuracy,
+        "time": time.time() - past,
+        "prediction": model.predict(X_pred)[0],
+    }
 def knn(data,X_pred):
     past = time.time()
     X, y = np.split(data, [-1], axis=1)
@@ -40,7 +74,7 @@ def knn(data,X_pred):
     y_pred=knn_model.predict(X_test)
     matrix=confusion_matrix(y_test, y_pred)
     return {
-        "model": "KNN",
+        "model": "KNN 4 neighbours",
         "accuracy": float((matrix[0][0]+matrix[1][1])/(sum(matrix[0])+sum(matrix[1]))),
         "time": time.time()-past,
         "prediction" : knn_model.predict(X_pred)[0],
