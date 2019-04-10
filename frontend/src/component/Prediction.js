@@ -23,7 +23,7 @@ class Prediction extends Component {
 			ca: '',
 			thal: '',
 			result: [],
-			visible:true,
+			visible: false,
 		};
 	}
 
@@ -86,11 +86,11 @@ class Prediction extends Component {
 		}))(this.state);
 
 		for (var key in obj){
-			if (obj[key] !== ''){
-				return false;
+			if (obj[key] === ''){
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	render() {
@@ -99,7 +99,7 @@ class Prediction extends Component {
 			wrapperCol: { span: 14 },
 		};
 
-		const { modeltype, age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal } = this.state;
+		const { age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal } = this.state;
 		return (
 			<div>
 				<Form {...formItemLayout} onSubmit={this.handleSubmit}>
