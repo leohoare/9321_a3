@@ -3,6 +3,7 @@ import {Tabs} from "antd";
 import LineGraph from "./component/LineGraph";
 import Factors from "./component/Factors";
 import Prediction from './component/Prediction';
+import BarChart from './component/BarChart';
 
 const TabPane = Tabs.TabPane;
 
@@ -14,6 +15,7 @@ class App extends Component {
           <TabPane tab="Graphs" key="1"><LineGraph localURL="http://localhost:5000/"/></TabPane>
           <TabPane tab="Factors" key="2"><Factors localURL="http://localhost:5000/"/></TabPane>
           <TabPane tab="Prediction" key="3"> <Prediction  localURL="http://localhost:5000/"/></TabPane>
+          <TabPane tab="BarChart" key="4"><BarChart localURL="http://localhost:5000/"/></TabPane>
         </Tabs>
       </div>
     );
