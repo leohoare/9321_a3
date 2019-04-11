@@ -17,7 +17,7 @@ from flask_cors import CORS
 
 from model.train import logregcoeff, logreg, knn, dnn
 from model.model import prediction_clean_data
-from model.train import train_random_forest, graph_random_forest
+from model.train import train_random_forest, graph_random_forest,feature_extraction_with_random_forest
 
 AxisMapping = {
         1: "Age",
@@ -166,11 +166,13 @@ class postprediction(Resource):
                 return logreg(df_model,pred_values),200
             elif modeltype == "randomforest":
                 return train_random_forest(df_model,pred_values),200
-
+            elif modeltype =="randomforest_advance":
+                return feature_extraction_with_random_forest(df_model,pred_values),200
         return [knn(df_model,pred_values),
                 dnn(df_model,pred_values),
                 logreg(df_model,pred_values),
-                train_random_forest(df_model,pred_values)]\
+                train_random_forest(df_model,pred_values),
+                feature_extraction_with_random_forest(df_model,pred_values)]\
             ,200
 
 if __name__ == '__main__':

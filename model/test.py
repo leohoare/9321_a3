@@ -2,6 +2,7 @@ from model import prediction_clean_data
 from train import knn
 from train import train_random_forest
 from train import graph_random_forest
+from train import pca_with_random_forest
 import pandas as pd
 
 
@@ -21,12 +22,12 @@ def run_test():
     df_model = pd.read_csv("./../data/model.csv")
     analytics = prediction_clean_data(analytics, df_norm)
     knn_a = knn(df_model,analytics)
-
     random = train_random_forest(df_model,analytics)
+    #print(random)
+    print(pca_with_random_forest(df_model,analytics))
+    #print(graph_random_forest(df_model))
 
-
-    print(graph_random_forest(df_model))
-
+    #pca with random forest
 
 
 if __name__ == "__main__":

@@ -14,6 +14,8 @@ from sklearn.externals import joblib
 from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 
+from sklearn.feature_selection import SelectFromModel
+
 from sklearn.tree import export_graphviz
 
 # WHEN RUNNING MODEL
@@ -25,7 +27,7 @@ from model.model import clean_model
 from model.model import meanAndSd
 from model.model import prediction_clean_data
 
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 
 
@@ -40,20 +42,15 @@ def graph_random_forest(data):
                                    min_samples_split=10, n_estimators=100, random_state=0)
     model.fit(X_train, y_train.values.ravel())
     feat_importance = model.feature_importances_
+
     indices = np.argsort(feat_importance)[::-1]
     names = [X.columns[i] for i in indices]
     top_10_names = names[:10]
     top_10_features = feat_importance[indices][:10]
-
-
-
-
-
     """
     t = ((1, 'a'),(2, 'b'))
     >>> dict((y, x) for x, y in t)
     {'a': 1, 'b': 2}
-    
     """
     dicc = {}
     a = list()
@@ -184,3 +181,63 @@ def dnn(data,X_pred):
         "prediction" : int((classifier.predict(X_pred)>0.5)[0][0]),
     }
 
+
+"""
+Pca with random forest 
+Dimensional reduction 
+"""
+def feature_extraction_with_random_forest(data,X_pred):
+    past = time.time()
+    X, y = np.split(data, [-1], axis=1)
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1000)
+
+    model = RandomForestClassifier(max_depth=110, max_features=3, min_samples_leaf=3,
+                                   min_samples_split=10, n_estimators=100, random_state=0)
+    model.fit(X_train, y_train.values.ravel())
+
+    y_pred = model.predict(X_test)
+    matrix = confusion_matrix(y_test, y_pred)
+    feat_importance = model.feature_importances_
+    indices = np.argsort(feat_importance)[::-1]
+    names = [X.columns[i] for i in indices]
+    top__names = names
+    top__features = feat_importance[indices]
+    """
+    for feature in zip(top__names,top__features):
+        print(feature)
+    """
+    #selecting model of high importance
+
+    selected_model = SelectFromModel(model,threshold= 0.03)
+    selected_model.fit(X_train,y_train.values.ravel())
+    """
+    for feature_list_index in selected_model.get_support(indices=True):
+        print(X.columns[feature_list_index])
+    """
+    X_important_train = selected_model.transform(X_train)
+    X_important_test = selected_model.transform(X_test)
+
+    X_important_pred = selected_model.transform(X_pred)
+
+    model_important = RandomForestClassifier(max_depth=110, max_features=3, min_samples_leaf=3,
+                                   min_samples_split=10, n_estimators=100, random_state=0)
+
+    model_important.fit(X_important_train,y_train.values.ravel())
+
+    y_pred = model_important.predict(X_important_test)
+    matrix_important = confusion_matrix(y_test, y_pred)
+
+    base_accuracy = float((matrix[0][0] + matrix[1][1]) / (sum(matrix[0]) + sum(matrix[1])))
+    # graph_random_forest(X,feat_importance)
+    feature_selection_accuracy = float((matrix_important[0][0] + matrix_important[1][1]) / (sum(matrix_important[0]) + sum(matrix_important[1])))
+    # save model for graph generator
+    return {
+        "model": "Random Forest",
+        "Base accuracy": base_accuracy,
+        "Feature Selection accuracy": feature_selection_accuracy,
+        "time": time.time() - past,
+        "prediction by base model": model.predict(X_pred)[0],
+        "prediction by feature extraction":model_important.predict(X_important_pred)[0]
+
+    }
