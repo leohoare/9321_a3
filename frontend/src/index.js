@@ -8,6 +8,7 @@ import App from "./App";
 // import "./index.css";
 import "antd/dist/antd.css";
 import "./css/primitive.css";
+import "./css/react-vis-style.css";
 
 ReactDOM.render(
   <Router>

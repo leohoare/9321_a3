@@ -3,7 +3,9 @@ import {
     XYPlot,
     XAxis,
     YAxis,
+	HorizontalGridLines,
     VerticalBarSeries,
+	ChartLabel,
     LabelSeries
 } from 'react-vis';
 
@@ -34,15 +36,43 @@ class BarChart extends React.Component {
         const chartWidth = 800;
         const chartHeight = 500;
         const chartDomain = [0, 1];
+		const chartMargin = {"left": 100, "right": 20, "top": 65, "bottom": 65};
         return (
             <XYPlot 
                 xType="ordinal" 
                 width={chartWidth} 
                 height={chartHeight} 
                 yDomain={chartDomain}
+				margin={chartMargin}
             >
+				<HorizontalGridLines />
                 <XAxis />
                 <YAxis />
+				<ChartLabel
+					text="Categorical Factors"
+					includeMargin={false}
+					xPercent={0.41}
+					yPercent={1.32}
+					/>
+				<ChartLabel
+					text="Impact"
+					includeMargin={false}
+					xPercent={-0.085}
+					yPercent={0.63}
+					style={{
+						transform: 'rotate(-90)',
+						textAnchor: 'end'
+					}}
+					/>
+				<ChartLabel
+					text="Top 10 Factors Related to Heart Disease"
+					includeMargin={false}
+					xPercent={0.3}
+					yPercent={0.08}
+					style={{
+						fontWeight: 'bold'
+					}}
+					/>
                 <VerticalBarSeries
                     data={dataArr}
                 /> 
@@ -52,6 +82,10 @@ class BarChart extends React.Component {
                     })}
                     labelAnchorX="middle"
                     labelAnchorY="text-after-edge"
+					style={{
+						fontSize: '13px',
+						fill: '#6b6b76'
+					}}
                 />
             </XYPlot>
         );
