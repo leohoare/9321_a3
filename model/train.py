@@ -52,7 +52,7 @@ def graph_random_forest(data):
     >>> dict((y, x) for x, y in t)
     {'a': 1, 'b': 2}
     """
-    dicc = {}
+
     a = list()
     for i in range(len(top_10_names)):
         #b["x"]= top_10_names[i]
@@ -62,7 +62,6 @@ def graph_random_forest(data):
         t = (b ,d)
         dicc = dict((x,y) for x,y in t)
         a.append(dicc)
-
     return a
     """
     To print in matlob values 
@@ -73,7 +72,6 @@ def graph_random_forest(data):
     #plt.show()
 
     dictionary = dict(zip(names, feat_importance[indices]))
-
 
     dict_columns = {}
     for k,v in dictionary.items():
@@ -91,6 +89,7 @@ def graph_random_forest(data):
             else:
                 dict_columns[a] = v
     dict_columns= dict(sorted(dict_columns.items(), key=lambda x: x[1],reverse=True))
+
     x_feature = list(dict_columns.keys())
     x_values = list(dict_columns.values())
     dict_columns = dict(zip(x_feature,x_values))
@@ -100,6 +99,54 @@ def graph_random_forest(data):
     #plt.xticks(range(len(x_values)), x_feature, fontsize=8)
     #plt.title("Top 10 Important Feature")
     #plt.show()
+
+
+def graph_random_forest_non_cat(data):
+    X, y = np.split(data, [-1], axis=1)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1000)
+    model = RandomForestClassifier(max_depth=110, max_features=3, min_samples_leaf=3,
+                                   min_samples_split=10, n_estimators=100, random_state=0)
+    model.fit(X_train, y_train.values.ravel())
+    feat_importance = model.feature_importances_
+
+    indices = np.argsort(feat_importance)[::-1]
+    names = [X.columns[i] for i in indices]
+    dictionary = dict(zip(names, feat_importance[indices]))
+
+    dict_columns = {}
+    for k, v in dictionary.items():
+        if '_' in k:
+            a = k.split("_")[0]
+            # check if it is in dict
+            if a in dict_columns:
+                dict_columns[a] = dictionary[k] + dict_columns[a]
+            else:
+                dict_columns[a] = v
+        else:
+            a = k
+            if a in dict_columns:
+                dict_columns[a] = dictionary[k] + dict_columns[a]
+            else:
+                dict_columns[a] = v
+    dict_columns = dict(sorted(dict_columns.items(), key=lambda x: x[1], reverse=True))
+
+    x_feature = list(dict_columns.keys())
+    x_values = list(dict_columns.values())
+
+
+
+    a = list()
+    for i in range(len(x_feature)):
+
+
+        b = ("x", x_feature[i])
+        d = ("y", x_values[i])
+        t = (b, d)
+        dicc = dict((x, y) for x, y in t)
+        a.append(dicc)
+
+    return a
+
 
 
 def train_random_forest(data, X_pred):

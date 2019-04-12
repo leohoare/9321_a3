@@ -1,8 +1,8 @@
 from model import prediction_clean_data
 from train import knn
 from train import train_random_forest
-from train import graph_random_forest
-from train import pca_with_random_forest
+from train import graph_random_forest_non_cat
+
 import pandas as pd
 
 
@@ -24,8 +24,9 @@ def run_test():
     knn_a = knn(df_model,analytics)
     random = train_random_forest(df_model,analytics)
     #print(random)
-    print(pca_with_random_forest(df_model,analytics))
-    #print(graph_random_forest(df_model))
+    #print(pca_with_random_forest(df_model,analytics))
+    a =graph_random_forest_non_cat(df_model)
+
 
     #pca with random forest
 

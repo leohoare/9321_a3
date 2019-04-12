@@ -18,6 +18,7 @@ from flask_cors import CORS
 from model.train import logregcoeff, logreg, knn, dnn
 from model.model import prediction_clean_data
 from model.train import train_random_forest, graph_random_forest,feature_extraction_with_random_forest
+from model.train import graph_random_forest_non_cat
 
 AxisMapping = {
         1: "Age",
@@ -119,6 +120,12 @@ class getFactors(Resource):
     @api.doc(response={200,'Success'})
     def get(self):
         return graph_random_forest(df_model)
+
+@api.route('/getnoncatfactors/')
+class getNonCatFactors:
+    @api.doc(response = {200,'Success'})
+    def __get__(self):
+        return graph_random_forest_non_cat(df_model)
 @api.route('/getprediction/')
 class postprediction(Resource):
     @api.doc(body=api.model("payload", {
