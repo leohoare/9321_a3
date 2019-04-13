@@ -9,7 +9,7 @@ import {
     LabelSeries
 } from 'react-vis';
 
-class BarChart extends React.Component {
+class CategoricalBarChart extends React.Component {
 	constructor(props) {
         super(props)
         this.state = {
@@ -65,9 +65,9 @@ class BarChart extends React.Component {
 					}}
 					/>
 				<ChartLabel
-					text="Top 10 Factors Related to Heart Disease"
+					text="Top Categorical Factors Related to Heart Disease"
 					includeMargin={false}
-					xPercent={0.3}
+					xPercent={0.25}
 					yPercent={0.08}
 					style={{
 						fontWeight: 'bold'
@@ -93,4 +93,4 @@ class BarChart extends React.Component {
 
 }
 
-export default BarChart;
+export default CategoricalBarChart;

@@ -124,7 +124,7 @@ class getFactors(Resource):
 @api.route('/getnoncatfactors/')
 class getNonCatFactors(Resource):
     @api.doc(response = {200,'Success'})
-    def __get__(self):
+    def get(self):
         return graph_random_forest_non_cat(df_model)
 @api.route('/getprediction/')
 class postprediction(Resource):
