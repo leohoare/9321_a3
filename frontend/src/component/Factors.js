@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {Tabs} from 'antd';
-import CategoricalBarChart from "./CategoricalBarChart";
-import NonCategoricalBarChart from "./NonCategoricalBarChart";
-import RadarChart from "./RadarChart";
+import HotEncodedFactors from "./HotEncodedFactors";
+import LogRegCoef from "./LogRegCoef";
 
 const TabPane = Tabs.TabPane;
 
@@ -11,9 +10,8 @@ class Factors extends Component {
 		return (
 			<div className="Factors">
 				<Tabs defaultActiveKey='1'>
-					<TabPane tab="Categorical Factors" key='1'><CategoricalBarChart localURL="http://localhost:5000/"/></TabPane>
-					<TabPane tab="Non-Categorical Factors" key='2'><NonCategoricalBarChart localURL="http://localhost:5000/"/></TabPane>
-					<TabPane tab="All Factors" key='3'><RadarChart localURL="http://localhost:5000/"/></TabPane>
+					<TabPane tab="One Hot Encoder Importance" key='1'><HotEncodedFactors localURL="http://localhost:5000/"/></TabPane>
+					<TabPane tab="Logistic Regression Weights" key='2'><LogRegCoef localURL="http://localhost:5000/"/></TabPane>
 				</Tabs>
 			</div>
 		);

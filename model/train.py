@@ -280,11 +280,11 @@ def feature_extraction_with_random_forest(data,X_pred):
     feature_selection_accuracy = float((matrix_important[0][0] + matrix_important[1][1]) / (sum(matrix_important[0]) + sum(matrix_important[1])))
     # save model for graph generator
     return {
-        "model": "Random Forest with feature extraction",
-        "Base accuracy": base_accuracy,
-        "Feature Selection accuracy": feature_selection_accuracy,
+        "model": "Random Forest with Feature Extraction",
+        # "Base accuracy": base_accuracy,
+        "accuracy": feature_selection_accuracy,
         "time": time.time() - past,
-        "prediction by base model": model.predict(X_pred)[0],
-        "prediction by feature extraction":model_important.predict(X_important_pred)[0]
+        # "prediction by base model": model.predict(X_pred)[0],
+        "prediction":model_important.predict(X_important_pred)[0]
 
     }

@@ -24,8 +24,6 @@ class LineGraph extends Component {
 
     handleSubmit=(e)=>{
       e.preventDefault();
-      console.log(this.props);
-      console.log(e);
       fetch(this.props.localURL+'getgraph/'+this.state.agesex+'/'+this.state.indicator)
       .then(results => {return results.json()})
       .then(jsonRes => {this.setState({grapharray: jsonRes.bytearray})})
@@ -58,7 +56,7 @@ class LineGraph extends Component {
                 <Button type="primary" htmlType="submit">Get graph</Button>
               </Header>
               <Content>
-                <img alt="line graph"src={"data:image/png;base64," + this.state.grapharray} hidden={this.state.hidden}/>
+                <img style={{display:'block',textAlign:'inline',justifyContent:'center'}} alt="line graph"src={"data:image/png;base64," + this.state.grapharray} hidden={this.state.hidden}/>
               </Content>
           </Form>
         </div>

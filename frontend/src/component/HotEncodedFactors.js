@@ -9,7 +9,7 @@ import {
     LabelSeries
 } from 'react-vis';
 
-class CategoricalBarChart extends React.Component {
+class HotEncodedFactors extends React.Component {
 	constructor(props) {
         super(props)
         this.state = {
@@ -18,7 +18,7 @@ class CategoricalBarChart extends React.Component {
     }
 
 	componentDidMount() {
-        fetch(this.props.localURL + 'getfactors/')
+        fetch(this.props.localURL + 'getnoncatfactors/')
 			.then(results => {return results.json()})
 			.then(response => {this.setState({
 								values: response.map(item => ({
@@ -38,24 +38,25 @@ class CategoricalBarChart extends React.Component {
         const chartDomain = [0, 1];
 		const chartMargin = {"left": 100, "right": 20, "top": 65, "bottom": 65};
         return (
-            <XYPlot 
+			<div style={{textAlign: 'center', alignItems:'center', display:'inline',justifyContent:'center'}}>            
+			<XYPlot 
                 xType="ordinal" 
                 width={chartWidth} 
                 height={chartHeight} 
                 yDomain={chartDomain}
 				margin={chartMargin}
-            >
+			>
 				<HorizontalGridLines />
                 <XAxis />
                 <YAxis />
 				<ChartLabel
-					text="Categorical Factors"
+					text="Factors leading to heart disease"
 					includeMargin={false}
-					xPercent={0.41}
+					xPercent={0.38}
 					yPercent={1.32}
 					/>
 				<ChartLabel
-					text="Impact"
+					text="Impact (Based on entropy)"
 					includeMargin={false}
 					xPercent={-0.085}
 					yPercent={0.63}
@@ -65,9 +66,9 @@ class CategoricalBarChart extends React.Component {
 					}}
 					/>
 				<ChartLabel
-					text="Top Categorical Factors Related to Heart Disease"
+					text="Top Factors Related to Heart Disease"
 					includeMargin={false}
-					xPercent={0.25}
+					xPercent={0.22}
 					yPercent={0.08}
 					style={{
 						fontWeight: 'bold'
@@ -88,9 +89,30 @@ class CategoricalBarChart extends React.Component {
 					}}
                 />
             </XYPlot>
+			<h4>-Explanation-</h4> 
+			<li>	Values with higher importance are selected first in trees.</li>
+			<li>	This is due the algorithm maximising entropy (largest information gain).</li>
+			<li>	So, values with the highest parameters in this graph are deemed the most important in determing heat disease outcomes.</li>
+			<li>	Feature importance was calculated using one hot encoded data.</li>
+			<li>	The algorithm was using sklearn feature extraction method</li>
+			<h4> </h4> 
+			<h4>-Legend-</h4>
+			<li>Intercept: the intercept for logistic regression</li>
+			<li>Age: the age of the patient</li>
+			<li>Sex: (1: male; 0: female)</li>
+			<li>cp: chest pain type (1:typical angin, 2:atypical angina, 3:non-anginal pain, 4:asymptomatic)</li>
+			<li>trestbps: resting blood pressure</li>
+			<li>chol: serum cholestoral in mg/dl</li>
+			<li>fbps: (1:fasting blood sugar > 120 mg/dl, 2: \> 120 mg/dl )</li>
+			<li>restecg: resting electrocardiographic (0:normal, 1:ST-T wave abnormality, 2:left ventricular hypertrophy)</li>
+			<li>exang: exercise induced angina (1: True, 0: False)</li>
+			<li>slope: the slope of the peak exercise ST segment</li>
+			<li>ca: number of major vessels (0-3) colored by flourosopy</li>
+			<li>thal(Thalassemia): 3 = normal; 6 = fixed defect; 7 = reversable defect</li>
+			</div>
         );
     }
 
 }
 
-export default CategoricalBarChart;
+export default HotEncodedFactors;
