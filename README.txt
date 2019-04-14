@@ -15,3 +15,10 @@ Starting frontend
         npm install package.json --save
     2. run
         npm start
+
+Contributors:
+Leo Hoare
+Amit Lamichhane
+Michael Zhai 
+Ying Feng 
+
