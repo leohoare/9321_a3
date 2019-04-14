@@ -43,12 +43,13 @@ class LogRegCoef extends Component {
         }}
         />
         <div style={{textAlign: 'center'}}>
+          <h4> -Explanation- </h4>
+          <li>These are the logistic regression coefficients</li>
+          <li>Positive effects will lead to a higher probability of heart disease</li>
+          <li>Negative effects will lead to a lower probability of heart disease</li>
+          <li>The probability is calculated based on Y=sigmoid(XB) </li>
+          <li>where X is the sample values, B is the coefficients and Y is the probability of heart disease</li>
           <h4> </h4>
-          <h4>These are the logistic regression coefficients</h4>
-          <h4>Positive effects will lead to a higher probability of heart disease</h4>
-          <h4>Negative effects will lead to a lower probability of heart disease</h4>
-          <h4>The probability is calculated based on Y=sigmoid(XB) </h4>
-          <h4>where X is the sample values, B is the coefficients and Y is the probability of heart disease</h4>
           <h4>-Legend-</h4> 
           <li>Intercept: the intercept for logistic regression</li>
           <li>Age: the age of the patient</li>

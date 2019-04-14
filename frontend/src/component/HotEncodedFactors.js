@@ -33,8 +33,8 @@ class HotEncodedFactors extends React.Component {
 		const dataArr = this.state.values.map((d) => {
 			return {x: d.x, y: d.y}
 		});
-        const chartWidth = 800;
-        const chartHeight = 500;
+        const chartWidth = 1200;
+        const chartHeight = 800;
         const chartDomain = [0, 1];
 		const chartMargin = {"left": 100, "right": 20, "top": 65, "bottom": 65};
         return (
@@ -96,7 +96,7 @@ class HotEncodedFactors extends React.Component {
 			<li>	Feature importance was calculated using one hot encoded data.</li>
 			<li>	The algorithm was using sklearn feature extraction method</li>
 			<h4> </h4> 
-			<h4>-Legend-</h4>
+			<h4>-Legend</h4>
 			<li>Intercept: the intercept for logistic regression</li>
 			<li>Age: the age of the patient</li>
 			<li>Sex: (1: male; 0: female)</li>

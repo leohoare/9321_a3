@@ -199,7 +199,9 @@ class Prediction extends Component {
 					display : this.state.result.length > 0 ? 'none' : 'block'
 				}}/>
 				<p style = {{ visibility:this.state.result.length > 0 ? 'visible' : 'hidden'}}>
-					Accuracy is based on training 80% of the data and testing on 20%
+					<li>Accuracy: Prediction accuracy is based on training 80% and testing on remaining 20%</li>
+					<li>Time: Time taken in seconds for model to train</li>
+					<li>Prediction: Outcome whether patient is predicted to have heart disease</li>
 				</p>
 				<List
 					itemLayout="horizontal"
@@ -209,8 +211,8 @@ class Prediction extends Component {
 						<List.Item.Meta
 						title={item.model}
 						/>
-						time : {item.time}<br/>
-						accuracy : {item.accuracy}<br/>
+						time : {item.time.toFixed(4)} seconds<br/>
+						accuracy : {(item.accuracy*100).toFixed(2)}%<br/>
 						prediction : {(item.prediction===0)?'No Heart Disease':'Heart Disease! :('}<br/>
 					</List.Item>
 					)}
